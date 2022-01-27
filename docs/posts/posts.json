@@ -13,7 +13,24 @@
     "categories": [],
     "contents": "\n\n\n\n",
     "preview": {},
-    "last_modified": "2022-01-26T21:58:17-05:00",
-    "input_file": {}
+    "last_modified": "2022-01-26T23:17:05-05:00",
+    "input_file": "welcome.knit.md"
+  },
+  {
+    "path": "posts/2022-01-26-project-and-network-data/",
+    "title": "Description and Network Data",
+    "description": "Read about the project and the network data",
+    "author": [
+      {
+        "name": "Santiago Virgüez",
+        "url": {}
+      }
+    ],
+    "date": "2022-01-26",
+    "categories": [],
+    "contents": "\nHave interest groups in the Inter-American Court of Human Rights (IAcHR) come to work together? How have their coalition strategies changed over time? The increasing legitimacy of amici participation in national courts have paved the way for interest groups (particularly nongovernmental organizations) to increase amici advocacy before international courts (Johnson and Amerasinghe 2009). Amicus briefs are perceived as one of the most effective and less costly methods of legal advocacy to nonjudicial actors (Krislov 1963). For this reason, scholars have begun to construct networks based on amicus briefs. Nevertheless, as Box-Steffensmeier et. al. (2017) have argued, these constructions provide little clue as to who works with whom and how interest actors change their coalition strategies over time.\nTo address these questions, I want to undertake an empirical study based on a new database on the ICHR rulings compiled by the PluriCourts project of the University of Oslo (Stiansen, Naurin, and Bøyum 2020). I will update their Dataset on amici actors (See file “IACtHRamici.RDATA”) to include some new cases decided by the IAcHR and turn it into network data.\n\n\n\n",
+    "preview": {},
+    "last_modified": "2022-01-26T23:23:39-05:00",
+    "input_file": "project-and-network-data.knit.md"
   }
 ]
