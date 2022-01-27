@@ -1,7 +1,10 @@
 ---
 title: "Description and Network Data"
+<<<<<<< HEAD
 description: |
   Read about the project and the network data
+=======
+>>>>>>> 897f46b3d87925fb56cd98860cc32b97de39aaee
 author: "Santiago Virgüez"
 date: 2022-01-26
 output:
