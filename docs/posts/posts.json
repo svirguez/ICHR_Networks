@@ -1,0 +1,19 @@
+[
+  {
+    "path": "posts/welcome/",
+    "title": "Welcome!",
+    "description": "This is my new blog 'Friends of the Court'. I hope you enjoy \nreading about networks of amici actors in the Inter-American Court of Human Rights",
+    "author": [
+      {
+        "name": "Santiago Virgüez",
+        "url": {}
+      }
+    ],
+    "date": "2022-01-26",
+    "categories": [],
+    "contents": "\n\n\n\n",
+    "preview": {},
+    "last_modified": "2022-01-26T21:58:17-05:00",
+    "input_file": {}
+  }
+]

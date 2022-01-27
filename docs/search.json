@@ -1,0 +1,20 @@
+{
+  "articles": [
+    {
+      "path": "about.html",
+      "title": "About this blog",
+      "description": "I explore networks of amici actors in the Inter-American Court of Human Rights",
+      "author": [],
+      "contents": "\n\n\n\n",
+      "last_modified": "2022-01-26T21:58:22-05:00"
+    },
+    {
+      "path": "index.html",
+      "title": "Friends of the Court",
+      "author": [],
+      "contents": "\n\n\n\n",
+      "last_modified": "2022-01-26T21:58:23-05:00"
+    }
+  ],
+  "collections": ["posts/posts.json"]
+}

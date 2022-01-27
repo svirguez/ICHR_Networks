@@ -1,0 +1,9 @@
+---
+title: "About this blog"
+description: |
+  I explore networks of amici actors in the Inter-American Court of Human Rights
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```

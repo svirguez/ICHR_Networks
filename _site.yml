@@ -1,0 +1,12 @@
+name: "ICHR_Networks"
+title: "Friends of the Court"
+description: |
+  Exploring networks of amici actors in the Inter-American Court of Human Rights
+output_dir: "docs"
+navbar:
+  right:
+    - text: "Home"
+      href: index.html
+    - text: "About"
+      href: about.html
+output: distill::distill_article
