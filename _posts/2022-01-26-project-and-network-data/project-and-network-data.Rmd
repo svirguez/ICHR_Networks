@@ -3,7 +3,7 @@ title: "Description and Network Data"
 description: |
   Read about the project and the network data
 author: "Santiago Virgüez"
-date: 2022-01-26
+date: 2022-01-27
 output:
   distill::distill_article:
     self_contained: false
