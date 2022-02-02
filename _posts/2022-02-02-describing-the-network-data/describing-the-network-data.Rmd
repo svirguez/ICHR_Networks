@@ -1,0 +1,102 @@
+---
+title: "Describing the Network Data"
+description: |
+  From raw data to network data 
+author:
+  - name: Santiago Virgüez
+date: 2022-02-02
+output:
+  distill::distill_article:
+    self_contained: false
+---
+
+As mentioned in the previous post, I'm working with a new database on the IAcHR rulings compiled by the PluriCourts project of the University of Oslo (Stiansen, Naurin, and Bøyum 2020). This [dataset of amici actors](https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/FNZICT) has 425 observations of 2 variables ("Name of Amicus" and "Case ID"), indicating in which cases  an amici actor participated in:
+
+![A view of the dataset on amici](/Users/SantiagoVirguez/Desktop/ICHR_Networks/_posts/2022-02-02-describing-the-network-data/IMG_1242.jpg)
+
+### From raw data to an adjacency matrix{.tabset}
+
+In order to work with this dataset, I need to put the data into a format that is suitable for network analysis. So, after cleaning the data, I create an adjacency matrix (nxn) where I can see how many times interveners have filed an amicus brief in the same case than each other.
+
+```{r}
+data <- read.csv("CleanedData.csv")
+
+#New column count
+data$count <- 1
+
+library(tidyr)
+
+#Gather the data at case level
+lev_data <- pivot_wider(data,id_cols = CaseID, names_from = `Name.of.Amicus`, values_from = count, values_fn = list(count = length), values_fill = list(count = 0))
+
+#Create the adjacency matrix
+mat <- as.matrix(lev_data[-1])
+ad_matrix <- t(mat) %*% mat
+```
+
+![Adjacency matrix](/Users/SantiagoVirguez/Desktop/ICHR_Networks/_posts/2022-02-02-describing-the-network-data/IMG_1243.jpg)
+
+### Describing the network dataset{.tabset}
+
+Before describing the network dataset, I need first to create a network object from the dataset loaded (the adjacency network):
+
+```{r}
+library(igraph)
+amici_network <- graph.adjacency(ad_matrix, mode = "undirected", weighted = TRUE)
+
+is_directed(amici_network)
+is_weighted(amici_network)
+is_bipartite(amici_network)
+
+```
+
+Now, I can identify and describe content of nodes and links, and identify format of data set, Of course, from the previous steps we know that this a matrix, symmetric, and weighted. This means that each time there is a connection between two amici, each of them is filing a briefe before the court (symetrical), but these ties among amici are valued according to how many time they have intervened in the same cases.
+
+We can also identify the network attributes:
+
+```{r}
+
+#size
+vcount(amici_network)
+ecount(amici_network)
+
+#attributes names and content
+vertex_attr_names(amici_network)
+edge_attr_names(amici_network)
+
+head(V(amici_network)$name)
+head(E(amici_network)$weight)
+```
+
+It is also possible to describe the network structure:
+
+```{r}
+#Dyad census: because the ties are undirected we will expect that there is no assymetrical edges
+igraph::dyad.census(amici_network)
+
+#Triad census
+igraph::triad_census(amici_network)
+```
+
+In terms of transitivity or global clustering, it is possible to see how the proption of connected triads in the network of amici that are complete is hight, meaning that almost all connected triads are transitive. Likewise, the local clustering coefficient (emphasis on low degree nodes) confirms the high transitivity of the network:
+
+```{r}
+#global clustering
+transitivity(amici_network)
+
+#local clustering coefficient
+transitivity(amici_network, type="average")
+```
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+
+
+
+
+
+

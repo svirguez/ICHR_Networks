@@ -8,8 +8,7 @@ output:
   distill::distill_article:
     self_contained: false
 ---
-
-![Inter-American Court of Human Rights](/Users/SantiagoVirguez/Desktop/ICHR_Networks/_posts/images/Court.jpeg)
+![IAcHR](/Users/SantiagoVirguez/Desktop/ICHR_Networks/_posts/2022-01-26-project-and-network-data/26774592645_43bda64cdb_z.jpeg)
 
 Have interest groups in the Inter-American Court of Human Rights (IAcHR) come to work together? How have their coalition strategies changed over time? The increasing legitimacy of amici participation in national courts have paved the way for interest groups (particularly nongovernmental organizations) to increase amici advocacy before international courts (Johnson and Amerasinghe 2009). Amicus briefs are perceived as one of the most effective and less costly methods of legal advocacy to nonjudicial actors (Krislov 1963). For this reason, scholars have begun to construct networks based on amicus briefs. Nevertheless, as Box-Steffensmeier et. al. (2017) have argued, these constructions provide little clue as to who works with whom and how interest actors change their coalition strategies over time.
 
