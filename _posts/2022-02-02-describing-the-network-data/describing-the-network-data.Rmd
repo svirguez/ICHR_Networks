@@ -16,7 +16,7 @@ As mentioned in the previous post, I'm working with a new database on the IAcHR 
 
 ### From raw data to an adjacency matrix{.tabset}
 
-In order to work with this dataset, I need to put the data into a format that is suitable for network analysis. So, after cleaning the data, I create an adjacency matrix (nxn) where I can see how many times interveners have filed an amicus brief in the same case than each other.
+In order to work with this dataset, I need to put the data into a format that is suitable for network analysis. So, after cleaning the data, I create an adjacency matrix (nxn) where I can see how many times interveners have filed an amicus brief in the same case than each other. I asigned "0" to the diagonal of the matrix to ignore the ties from a node to itself.
 
 ```{r}
 data <- read.csv("CleanedData.csv")
@@ -32,6 +32,7 @@ lev_data <- pivot_wider(data,id_cols = CaseID, names_from = `Name.of.Amicus`, va
 #Create the adjacency matrix
 mat <- as.matrix(lev_data[-1])
 ad_matrix <- t(mat) %*% mat
+diag(ad_matrix) <- 0
 ```
 
 ![Adjacency matrix](/Users/SantiagoVirguez/Desktop/ICHR_Networks/_posts/2022-02-02-describing-the-network-data/IMG_1243.jpg)
