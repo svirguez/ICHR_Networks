@@ -1,0 +1,153 @@
+---
+title: "Degree and Centrality in the IAcHR Network"
+description: |
+  Degree and centrality analysis usign the network data
+author:
+  - name: Santiago Virgüez
+date: 2022-02-09
+output:
+  distill::distill_article:
+    self_contained: false
+---
+
+### Recap{.tabset}
+Before analyzing the degree and centrality of some of the nodes of the IAcHR network, lets recall briefly how I organized the network data in the previous post:
+
+```{r}
+library(tidyr)
+data <- read.csv("CleanedData.csv")
+#New column count
+data$count <- 1
+
+#Gather the data at case level
+lev_data <- pivot_wider(data,id_cols = CaseID, names_from = `Name.of.Amicus`, values_from = count, values_fn = list(count = length), values_fill = list(count = 0))
+
+#Create the adjacency matrix
+mat <- as.matrix(lev_data[-1])
+ad_matrix <- t(mat) %*% mat
+
+#Ignore the ties from a node to itself 
+diag(ad_matrix) <- 0
+```
+
+Using this matrix, I created an adjacency graph:
+
+```{r}
+library(igraph)
+amici_network <- graph.adjacency(ad_matrix, mode = "undirected", weighted = TRUE)
+```
+
+### Affiliation Network Data{.tabset}
+
+Nevertheless, from previous posts we know that the amici data I am working with has the following characteristics:
+
+- Nodes: Actors (individuals or organizations) that have filed at least one amicus brief before the Inter-American Court of Human Rights
+
+- Ties: If an actor has filed a brief in the same case than other actor, there is a tie.
+
+As you can see, the network is not based on a direct tie between the amici actors. They are connected by virtue of filing a brief in the same case. This means that we are dealing with an  affiliation network, that is a network where the members are affiliated with one another based on co-membership in a group, or co-participation in some type of event (in this case the event is a legal case).
+
+The affiliation is then organized as a 2-mode network, where amici actors are grouped by cases. We need to re-organize the matrix at the case level (see "lev_data" above) and create an 'incidence' matrix::
+
+```{r}
+#transpose lev_data to have amici grouped by case
+library(data.table)
+T_lev_data <- transpose(lev_data,)
+rownames(T_lev_data) <- colnames(lev_data)
+colnames(T_lev_data) <- lev_data$CaseID
+T_lev_data <- T_lev_data[-c(1),]
+```
+
+![2-mode nework](/Users/SantiagoVirguez/Desktop/ICHR_Networks/_posts/2022-02-09-degree-and-centrality-in-the-iachr-network/Image 2-9-22 at 17.10.jpg)
+
+So, in this affiliation network, there are  two types of nodes: one type for the amici actors, and another type for the legal cases (case 16, case 18 ...) to which the actors belong. Ties then connect the actors to those cases. In orther to work with this affiliation network in r, we need to create an 'incidence' graph.
+
+The 'graph.incidence' function takes a matrix or data.frame and transforms it into an affiliation network, reading the rows as actors and the columns as the cases.
+
+```{r}
+#create graph using 'igraph'
+Aff_network <- graph.incidence(T_lev_data)
+
+#description of the graph
+
+##size
+vcount(Aff_network)
+ecount(Aff_network)
+
+##ties
+is_bipartite(Aff_network)
+is_directed(Aff_network)
+is_weighted(Aff_network)
+```
+
+### One-Mode matrix (actor x actor / case x case){.tabset}
+
+In order to study athe affiliation network, we need to study both types of nodes (actors and cases). To do this, it may be useful to examine the direct connections among the nodes of one type at a time by extracting the one-mode projections of the two-mode affiliation network:
+
+```{r}
+#extracting the one-mode projections 
+Aff_network.pr <- bipartite.projection(Aff_network)
+Aff_network.pr
+```
+
+Then we can create two different adjacency graphs (actor x actor) (case x case) base on the projections
+
+```{r}
+amici_net <- Aff_network.pr$proj1
+case_net <- Aff_network.pr$proj2
+
+amici_ad <- graph.adjacency(get.adjacency(amici_net, sparse = FALSE,attr = "weight"))
+case_ad <- graph.adjacency(get.adjacency(case_net, sparse = FALSE,attr = "weight"))
+
+#describe both graphs
+##size
+vcount(amici_ad)
+ecount(amici_ad)
+
+vcount(case_ad)
+ecount(case_ad)
+
+```
+
+### Density, Degree, and Centrality of the Network{.tabset}
+
+Using the adjacency graphs we can measure the network density and centralization:
+
+```{r}
+#density
+graph.density(amici_ad)
+graph.density(case_ad)
+```
+
+It is possible to see how both graphs (actorxactor/casexcase) have a really low densisity. That means that most of amici actors do not oftenly file amicus briefs in the same cases (likewise, cases are not usually tied by  amici interventions). This is understandable given the fact that cases come from different countries, and amici actors tend to be local organizations or individuals, so it is unlikely that they participate in cases from other countries.
+
+This finding is also confirmed by lower level of centralization of the actor x actor graph, which shows that th eamici actors have a lower level of cohesion or integration between each other:
+
+```{r}
+centr_degree(amici_ad, loops = FALSE, mode = "total")$centralization
+```
+
+In order to analize the degree and centrality of the amici actors, we first create a dataset with the name a degree of all the nodes in this graph. Then we can see how the distribution of node degree for the amici actor network, based on what we already have seen, has a long tail on the left.
+
+```{r}
+amici.nodes<-data.frame(name=V(amici_ad)$name, degree=igraph::degree(amici_ad))
+
+#distribution
+hist(amici.nodes$degree, main = "Amici Influence: Degree Distribution", xlab = "Times filed a brief with other actor")
+```
+
+Although most of the actors have a lower degree, it is interesting to see that some organizations have an outstanding degree level:
+
+```{r}
+library(dplyr)
+arrange(amici.nodes, desc(degree))%>%slice(1:3)
+```
+
+It is not surprising that international organizations such as Amnesty International or the Center for International Law have higher degree, since they have political interest over several countries and more (in contrast with local NGOs) as well as more resources. What is interesting is the prominence of Dejusticia, a Colombian NGO with the highest score of degree centrality. As a local advocacy organization one might expect a minor involvement in legal cases outside of its base country; nevertheless it would be interesting to explore what is the reason behind its degree centrality.
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+
