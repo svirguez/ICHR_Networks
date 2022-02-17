@@ -1,0 +1,161 @@
+---
+title: "Status and Centrality Measures in the IAcHR Network"
+description: |
+  A look at the status measures of the network
+author:
+  - name: Santiago Virgüez
+date: 2022-02-16
+output:
+  distill::distill_article:
+    self_contained: false
+---
+
+### Recap Affiliation network{.tabset}
+
+Let's organize the affiliation matrix (actor by case) first:
+
+```{r}
+#Affiliation network data
+library(igraph)
+library(tidyr)
+data <- read.csv("CleanedData.csv")
+##New column count
+data$count <- 1
+
+##Gather the data at case level
+lev_data <- pivot_wider(data,id_cols = CaseID, names_from = `Name.of.Amicus`, 
+                        values_from = count, values_fn = list(count = length), 
+                        values_fill = list(count = 0))
+
+##transpose lev_data to have amici grouped by case
+library(data.table)
+T_lev_data <- transpose(lev_data,)
+rownames(T_lev_data) <- colnames(lev_data)
+colnames(T_lev_data) <- lev_data$CaseID
+T_lev_data <- T_lev_data[-c(1),]
+
+##create affiliation network graph using 'igraph'
+Aff_network <- graph.incidence(T_lev_data)
+```
+
+### Ploting the affiliation network{.tabset}
+
+We haven't provided a visualization of the affiliation network yet. Let's plot it.
+
+```{r}
+plot(Aff_network, vertex.label=NA)
+```
+
+Remember that in this affiliation network, so there are  two types of nodes: one type for the amici actors and another type for the legal cases (case 16, case 18 ...) to which the actors belong. Ties then connect the actors to those cases. So, as bipartite network it is better to plot the edges between the 2 types of nodes (the orange/circular nodes represent the amici actors, while the squared/blue nodes represent the cases):
+
+```{r}
+V(Aff_network)$color <- c("orange", "steel blue")[V(Aff_network)$type+1]
+V(Aff_network)$shape <- c("circle", "square")[V(Aff_network)$type+1]
+
+plot(Aff_network, vertex.label=NA, vertex.size=7, layout=layout.bipartite) 
+```
+
+
+### Degree centrality  by node{.tabset}g
+
+In the last post, I presented centrality measures for the one matrix (actor x actor), which was aimed to show the ties between actors by virtue of their participation in the same cases. Nevertheless, we saw that actors such as the Colombian NGO 'Dejusticia' had a higher degree of centrality due to the fact that they participated in (only) one case where a greater number of other amici actors participated. These actors were not central in the amici network, they just happen to be part of a really famous case.
+
+So, to have a better understanding of the centrality of the actors it is necessary to work with the affiliation network.
+
+```{r}
+#data frame for the nodes in the affiliation network
+aff.nodes<-data.frame(name=V(Aff_network)$name, degree=igraph::degree(Aff_network))
+
+#data frame for the actors nodes
+aff.nodes_amici <- aff.nodes[-c(404:482),]
+#data frame for the cases nodes
+aff.nodes_cases <- aff.nodes[-c(1:403),]
+```
+
+Now we can see the distribution of the centrality measures for each types of nodes. As you can see, both distributions are skewed towards zero, indicating the low degree centrality of the actors/cases. 
+
+```{r}
+#distribution for actors
+hist(aff.nodes_amici$degree, main = "Degree Distribution Actors to Cases", xlab = "# Cases in which an actor participated")
+
+#distribution for cases
+hist(aff.nodes_cases$degree, main = "Degree Distribution Cases to Actors", xlab = "# Actors that participated in the case")
+```
+
+We can also see the actors and cases with the highest degree of centrality in the affiliation network:
+
+```{r}
+library(dplyr)
+#top 3 actors
+arrange(aff.nodes_amici, desc(degree))%>%slice(1:3)
+
+#top 3 cases
+arrange(aff.nodes_cases, desc(degree))%>%slice(1:3)
+```
+
+As expected, international organizations have a higher degree centrality, that is participation in a higher number of cases, due to the fact that they have political interests across different countries, while local NGOs focus on legal cases from their base country. In terms of the cases, it is possible to see that the ones that attracted a greater number of amicus briefs were:
+
+- Artavia Murillo et al. (“In vitro fertilization”) v. Costa Rica. This case concerns human rights violations resulting from the State's general prohibition of the practice of in vitro fertilization.
+- Atala Riffo and Daughters v. Chile. This case concerns the discriminatory treatment and arbitrary interference in the private and family life of a lesbian mother, Ms. Karen Atala Riffo.
+- Nogueira de Carvalho et al. V. Brazil. Murder of Gilson Nogueira de Carvalho, a lawyer and human rights defender and the State failure to undertake an effective investigation into his death and failed to punish the responsible parties. 
+
+### Eigenvector and Bonacich power centrality{.tabset}g
+
+We can also compare different measures of centrality, including the eigen vector and Bonacich power. To do so, we need to add the data to the data frame of each type of node
+
+```{r}
+#eigen vector centrality
+temp<-centr_eigen(Aff_network,directed=F)
+aff.nodes$eigen<-temp$vector
+
+#bonacich power centrality
+aff.nodes$bonpow <- power_centrality(Aff_network, exponent = 0.9)
+
+aff.nodes_amici <- aff.nodes[-c(404:482),]
+aff.nodes_cases <- aff.nodes[-c(1:403),]
+```
+
+Then we can plot the distribution of the three measures of centrality. As you can see, there are not many central actors/cases in this network
+
+```{r}
+#plot distribution centrality measures
+library(ggplot2)
+aff.nodes_amici%>%
+  select(-name) %>% 
+  gather() %>% 
+  ggplot(aes(value)) +
+  geom_histogram() +
+  facet_wrap(~key, scales = "free")
+```
+
+Because the ties we are looking at are the connections between actors and cases, the eigenvector simply shows what actors are linked to the most central or 'popular' cases. On the other hand, the bonacich power centrality shows the actors that participated on the cases were no other people participated (therefore the actors with greater power of influence).
+
+```{r}
+#top 3 actors with highest eigenvector centrality
+arrange(aff.nodes_amici, desc(eigen))%>%
+  slice(1:3)
+
+#top 3 actors with highest bonacich power centrality
+arrange(aff.nodes_amici, desc(bonpow))%>%
+  slice(1:3)
+```
+
+Finally, we can correlate the different measures of centrality. As you can see all of the measures have negative correlation with each other. 
+
+```{r}
+library(corrr)
+library(seriation)
+
+cent.corr<-aff.nodes_amici %>% 
+  select(degree,eigen,bonpow)%>%
+  correlate() %>%
+  rearrange()
+
+cent.corr
+```
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+

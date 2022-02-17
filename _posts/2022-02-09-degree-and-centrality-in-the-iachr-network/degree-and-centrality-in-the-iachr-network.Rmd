@@ -60,7 +60,7 @@ T_lev_data <- T_lev_data[-c(1),]
 
 ![2-mode nework](/Users/SantiagoVirguez/Desktop/ICHR_Networks/_posts/2022-02-09-degree-and-centrality-in-the-iachr-network/Image 2-9-22 at 17.10.jpg)
 
-So, in this affiliation network, there are  two types of nodes: one type for the amici actors, and another type for the legal cases (case 16, case 18 ...) to which the actors belong. Ties then connect the actors to those cases. In orther to work with this affiliation network in r, we need to create an 'incidence' graph.
+So, in this affiliation network, there are  two types of nodes: one type for the amici actors, and another type for the legal cases (case 16, case 18 ...) to which the actors belong. Ties then connect the actors to those cases. In order to work with this affiliation network in r, we need to create an 'incidence' graph.
 
 The 'graph.incidence' function takes a matrix or data.frame and transforms it into an affiliation network, reading the rows as actors and the columns as the cases.
 

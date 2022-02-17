@@ -85,635 +85,39 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 
 
   <!--radix_placeholder_meta_tags-->
-  <title>Friends of the Court</title>
+  <title>Status and Centrality Measures in the IAcHR Network</title>
+  
+  <meta property="description" itemprop="description" content="A look at the status measures of the network"/>
   
   
-  
+  <!--  https://schema.org/Article -->
+  <meta property="article:published" itemprop="datePublished" content="2022-02-16"/>
+  <meta property="article:created" itemprop="dateCreated" content="2022-02-16"/>
+  <meta name="article:author" content="Santiago Virgüez"/>
   
   <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
-  <meta property="og:title" content="Friends of the Court"/>
+  <meta property="og:title" content="Status and Centrality Measures in the IAcHR Network"/>
   <meta property="og:type" content="article"/>
+  <meta property="og:description" content="A look at the status measures of the network"/>
   <meta property="og:locale" content="en_US"/>
-  <meta property="og:site_name" content="Friends of the Court"/>
   
   <!--  https://dev.twitter.com/cards/types/summary -->
   <meta property="twitter:card" content="summary"/>
-  <meta property="twitter:title" content="Friends of the Court"/>
+  <meta property="twitter:title" content="Status and Centrality Measures in the IAcHR Network"/>
+  <meta property="twitter:description" content="A look at the status measures of the network"/>
   
   <!--/radix_placeholder_meta_tags-->
   <!--radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-rmarkdown-metadata">
-  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","site","listing"]}},"value":[{"type":"character","attributes":{},"value":["Friends of the Court"]},{"type":"character","attributes":{},"value":["distill::distill_website"]},{"type":"character","attributes":{},"value":["posts"]}]}
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","author","date","output"]}},"value":[{"type":"character","attributes":{},"value":["Status and Centrality Measures in the IAcHR Network"]},{"type":"character","attributes":{},"value":["A look at the status measures of the network\n"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name"]}},"value":[{"type":"character","attributes":{},"value":["Santiago Virgüez"]}]}]},{"type":"character","attributes":{},"value":["2022-02-16"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained"]}},"value":[{"type":"logical","attributes":{},"value":[false]}]}]}]}
   </script>
   <!--/radix_placeholder_rmarkdown_metadata-->
+  
+  <script type="text/json" id="radix-resource-manifest">
+  {"type":"character","attributes":{},"value":["CleanedData.csv","status-and-centrality-measures-in-the-iachr-network_files/anchor-4.2.2/anchor.min.js","status-and-centrality-measures-in-the-iachr-network_files/bowser-1.9.3/bowser.min.js","status-and-centrality-measures-in-the-iachr-network_files/distill-2.2.21/template.v2.js","status-and-centrality-measures-in-the-iachr-network_files/figure-html5/unnamed-chunk-2-1.png","status-and-centrality-measures-in-the-iachr-network_files/figure-html5/unnamed-chunk-3-1.png","status-and-centrality-measures-in-the-iachr-network_files/figure-html5/unnamed-chunk-5-1.png","status-and-centrality-measures-in-the-iachr-network_files/figure-html5/unnamed-chunk-5-2.png","status-and-centrality-measures-in-the-iachr-network_files/figure-html5/unnamed-chunk-8-1.png","status-and-centrality-measures-in-the-iachr-network_files/jquery-3.6.0/jquery-3.6.0.js","status-and-centrality-measures-in-the-iachr-network_files/jquery-3.6.0/jquery-3.6.0.min.js","status-and-centrality-measures-in-the-iachr-network_files/jquery-3.6.0/jquery-3.6.0.min.map","status-and-centrality-measures-in-the-iachr-network_files/popper-2.6.0/popper.min.js","status-and-centrality-measures-in-the-iachr-network_files/tippy-6.2.7/tippy-bundle.umd.min.js","status-and-centrality-measures-in-the-iachr-network_files/tippy-6.2.7/tippy-light-border.css","status-and-centrality-measures-in-the-iachr-network_files/tippy-6.2.7/tippy.css","status-and-centrality-measures-in-the-iachr-network_files/tippy-6.2.7/tippy.umd.min.js","status-and-centrality-measures-in-the-iachr-network_files/webcomponents-2.0.0/webcomponents.js"]}
+  </script>
   <!--radix_placeholder_navigation_in_header-->
-  <meta name="distill:offset" content=""/>
-  
-  <script type="application/javascript">
-  
-    window.headroom_prevent_pin = false;
-  
-    window.document.addEventListener("DOMContentLoaded", function (event) {
-  
-      // initialize headroom for banner
-      var header = $('header').get(0);
-      var headerHeight = header.offsetHeight;
-      var headroom = new Headroom(header, {
-        tolerance: 5,
-        onPin : function() {
-          if (window.headroom_prevent_pin) {
-            window.headroom_prevent_pin = false;
-            headroom.unpin();
-          }
-        }
-      });
-      headroom.init();
-      if(window.location.hash)
-        headroom.unpin();
-      $(header).addClass('headroom--transition');
-  
-      // offset scroll location for banner on hash change
-      // (see: https://github.com/WickyNilliams/headroom.js/issues/38)
-      window.addEventListener("hashchange", function(event) {
-        window.scrollTo(0, window.pageYOffset - (headerHeight + 25));
-      });
-  
-      // responsive menu
-      $('.distill-site-header').each(function(i, val) {
-        var topnav = $(this);
-        var toggle = topnav.find('.nav-toggle');
-        toggle.on('click', function() {
-          topnav.toggleClass('responsive');
-        });
-      });
-  
-      // nav dropdowns
-      $('.nav-dropbtn').click(function(e) {
-        $(this).next('.nav-dropdown-content').toggleClass('nav-dropdown-active');
-        $(this).parent().siblings('.nav-dropdown')
-           .children('.nav-dropdown-content').removeClass('nav-dropdown-active');
-      });
-      $("body").click(function(e){
-        $('.nav-dropdown-content').removeClass('nav-dropdown-active');
-      });
-      $(".nav-dropdown").click(function(e){
-        e.stopPropagation();
-      });
-    });
-  </script>
-  
-  <style type="text/css">
-  
-  /* Theme (user-documented overrideables for nav appearance) */
-  
-  .distill-site-nav {
-    color: rgba(255, 255, 255, 0.8);
-    background-color: #0F2E3D;
-    font-size: 15px;
-    font-weight: 300;
-  }
-  
-  .distill-site-nav a {
-    color: inherit;
-    text-decoration: none;
-  }
-  
-  .distill-site-nav a:hover {
-    color: white;
-  }
-  
-  @media print {
-    .distill-site-nav {
-      display: none;
-    }
-  }
-  
-  .distill-site-header {
-  
-  }
-  
-  .distill-site-footer {
-  
-  }
-  
-  
-  /* Site Header */
-  
-  .distill-site-header {
-    width: 100%;
-    box-sizing: border-box;
-    z-index: 3;
-  }
-  
-  .distill-site-header .nav-left {
-    display: inline-block;
-    margin-left: 8px;
-  }
-  
-  @media screen and (max-width: 768px) {
-    .distill-site-header .nav-left {
-      margin-left: 0;
-    }
-  }
-  
-  
-  .distill-site-header .nav-right {
-    float: right;
-    margin-right: 8px;
-  }
-  
-  .distill-site-header a,
-  .distill-site-header .title {
-    display: inline-block;
-    text-align: center;
-    padding: 14px 10px 14px 10px;
-  }
-  
-  .distill-site-header .title {
-    font-size: 18px;
-    min-width: 150px;
-  }
-  
-  .distill-site-header .logo {
-    padding: 0;
-  }
-  
-  .distill-site-header .logo img {
-    display: none;
-    max-height: 20px;
-    width: auto;
-    margin-bottom: -4px;
-  }
-  
-  .distill-site-header .nav-image img {
-    max-height: 18px;
-    width: auto;
-    display: inline-block;
-    margin-bottom: -3px;
-  }
-  
-  
-  
-  @media screen and (min-width: 1000px) {
-    .distill-site-header .logo img {
-      display: inline-block;
-    }
-    .distill-site-header .nav-left {
-      margin-left: 20px;
-    }
-    .distill-site-header .nav-right {
-      margin-right: 20px;
-    }
-    .distill-site-header .title {
-      padding-left: 12px;
-    }
-  }
-  
-  
-  .distill-site-header .nav-toggle {
-    display: none;
-  }
-  
-  .nav-dropdown {
-    display: inline-block;
-    position: relative;
-  }
-  
-  .nav-dropdown .nav-dropbtn {
-    border: none;
-    outline: none;
-    color: rgba(255, 255, 255, 0.8);
-    padding: 16px 10px;
-    background-color: transparent;
-    font-family: inherit;
-    font-size: inherit;
-    font-weight: inherit;
-    margin: 0;
-    margin-top: 1px;
-    z-index: 2;
-  }
-  
-  .nav-dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: white;
-    min-width: 200px;
-    border: 1px solid rgba(0,0,0,0.15);
-    border-radius: 4px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.1);
-    z-index: 1;
-    margin-top: 2px;
-    white-space: nowrap;
-    padding-top: 4px;
-    padding-bottom: 4px;
-  }
-  
-  .nav-dropdown-content hr {
-    margin-top: 4px;
-    margin-bottom: 4px;
-    border: none;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-  }
-  
-  .nav-dropdown-active {
-    display: block;
-  }
-  
-  .nav-dropdown-content a, .nav-dropdown-content .nav-dropdown-header {
-    color: black;
-    padding: 6px 24px;
-    text-decoration: none;
-    display: block;
-    text-align: left;
-  }
-  
-  .nav-dropdown-content .nav-dropdown-header {
-    display: block;
-    padding: 5px 24px;
-    padding-bottom: 0;
-    text-transform: uppercase;
-    font-size: 14px;
-    color: #999999;
-    white-space: nowrap;
-  }
-  
-  .nav-dropdown:hover .nav-dropbtn {
-    color: white;
-  }
-  
-  .nav-dropdown-content a:hover {
-    background-color: #ddd;
-    color: black;
-  }
-  
-  .nav-right .nav-dropdown-content {
-    margin-left: -45%;
-    right: 0;
-  }
-  
-  @media screen and (max-width: 768px) {
-    .distill-site-header a, .distill-site-header .nav-dropdown  {display: none;}
-    .distill-site-header a.nav-toggle {
-      float: right;
-      display: block;
-    }
-    .distill-site-header .title {
-      margin-left: 0;
-    }
-    .distill-site-header .nav-right {
-      margin-right: 0;
-    }
-    .distill-site-header {
-      overflow: hidden;
-    }
-    .nav-right .nav-dropdown-content {
-      margin-left: 0;
-    }
-  }
-  
-  
-  @media screen and (max-width: 768px) {
-    .distill-site-header.responsive {position: relative; min-height: 500px; }
-    .distill-site-header.responsive a.nav-toggle {
-      position: absolute;
-      right: 0;
-      top: 0;
-    }
-    .distill-site-header.responsive a,
-    .distill-site-header.responsive .nav-dropdown {
-      display: block;
-      text-align: left;
-    }
-    .distill-site-header.responsive .nav-left,
-    .distill-site-header.responsive .nav-right {
-      width: 100%;
-    }
-    .distill-site-header.responsive .nav-dropdown {float: none;}
-    .distill-site-header.responsive .nav-dropdown-content {position: relative;}
-    .distill-site-header.responsive .nav-dropdown .nav-dropbtn {
-      display: block;
-      width: 100%;
-      text-align: left;
-    }
-  }
-  
-  /* Site Footer */
-  
-  .distill-site-footer {
-    width: 100%;
-    overflow: hidden;
-    box-sizing: border-box;
-    z-index: 3;
-    margin-top: 30px;
-    padding-top: 30px;
-    padding-bottom: 30px;
-    text-align: center;
-  }
-  
-  /* Headroom */
-  
-  d-title {
-    padding-top: 6rem;
-  }
-  
-  @media print {
-    d-title {
-      padding-top: 4rem;
-    }
-  }
-  
-  .headroom {
-    z-index: 1000;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-  }
-  
-  .headroom--transition {
-    transition: all .4s ease-in-out;
-  }
-  
-  .headroom--unpinned {
-    top: -100px;
-  }
-  
-  .headroom--pinned {
-    top: 0;
-  }
-  
-  /* adjust viewport for navbar height */
-  /* helps vertically center bootstrap (non-distill) content */
-  .min-vh-100 {
-    min-height: calc(100vh - 100px) !important;
-  }
-  
-  </style>
-  
-  <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
-  <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet"/>
-  <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet"/>
-  <script src="site_libs/headroom-0.9.4/headroom.min.js"></script>
-  <script src="site_libs/autocomplete-0.37.1/autocomplete.min.js"></script>
-  <script src="site_libs/fuse-6.4.1/fuse.min.js"></script>
-  
-  <script type="application/javascript">
-  
-  function getMeta(metaName) {
-    var metas = document.getElementsByTagName('meta');
-    for (let i = 0; i < metas.length; i++) {
-      if (metas[i].getAttribute('name') === metaName) {
-        return metas[i].getAttribute('content');
-      }
-    }
-    return '';
-  }
-  
-  function offsetURL(url) {
-    var offset = getMeta('distill:offset');
-    return offset ? offset + '/' + url : url;
-  }
-  
-  function createFuseIndex() {
-  
-    // create fuse index
-    var options = {
-      keys: [
-        { name: 'title', weight: 20 },
-        { name: 'categories', weight: 15 },
-        { name: 'description', weight: 10 },
-        { name: 'contents', weight: 5 },
-      ],
-      ignoreLocation: true,
-      threshold: 0
-    };
-    var fuse = new window.Fuse([], options);
-  
-    // fetch the main search.json
-    return fetch(offsetURL('search.json'))
-      .then(function(response) {
-        if (response.status == 200) {
-          return response.json().then(function(json) {
-            // index main articles
-            json.articles.forEach(function(article) {
-              fuse.add(article);
-            });
-            // download collections and index their articles
-            return Promise.all(json.collections.map(function(collection) {
-              return fetch(offsetURL(collection)).then(function(response) {
-                if (response.status === 200) {
-                  return response.json().then(function(articles) {
-                    articles.forEach(function(article) {
-                      fuse.add(article);
-                    });
-                  })
-                } else {
-                  return Promise.reject(
-                    new Error('Unexpected status from search index request: ' +
-                              response.status)
-                  );
-                }
-              });
-            })).then(function() {
-              return fuse;
-            });
-          });
-  
-        } else {
-          return Promise.reject(
-            new Error('Unexpected status from search index request: ' +
-                        response.status)
-          );
-        }
-      });
-  }
-  
-  window.document.addEventListener("DOMContentLoaded", function (event) {
-  
-    // get search element (bail if we don't have one)
-    var searchEl = window.document.getElementById('distill-search');
-    if (!searchEl)
-      return;
-  
-    createFuseIndex()
-      .then(function(fuse) {
-  
-        // make search box visible
-        searchEl.classList.remove('hidden');
-  
-        // initialize autocomplete
-        var options = {
-          autoselect: true,
-          hint: false,
-          minLength: 2,
-        };
-        window.autocomplete(searchEl, options, [{
-          source: function(query, callback) {
-            const searchOptions = {
-              isCaseSensitive: false,
-              shouldSort: true,
-              minMatchCharLength: 2,
-              limit: 10,
-            };
-            var results = fuse.search(query, searchOptions);
-            callback(results
-              .map(function(result) { return result.item; })
-            );
-          },
-          templates: {
-            suggestion: function(suggestion) {
-              var img = suggestion.preview && Object.keys(suggestion.preview).length > 0
-                ? `<img src="${offsetURL(suggestion.preview)}"</img>`
-                : '';
-              var html = `
-                <div class="search-item">
-                  <h3>${suggestion.title}</h3>
-                  <div class="search-item-description">
-                    ${suggestion.description || ''}
-                  </div>
-                  <div class="search-item-preview">
-                    ${img}
-                  </div>
-                </div>
-              `;
-              return html;
-            }
-          }
-        }]).on('autocomplete:selected', function(event, suggestion) {
-          window.location.href = offsetURL(suggestion.path);
-        });
-        // remove inline display style on autocompleter (we want to
-        // manage responsive display via css)
-        $('.algolia-autocomplete').css("display", "");
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
-  
-  });
-  
-  </script>
-  
-  <style type="text/css">
-  
-  .nav-search {
-    font-size: x-small;
-  }
-  
-  /* Algolioa Autocomplete */
-  
-  .algolia-autocomplete {
-    display: inline-block;
-    margin-left: 10px;
-    vertical-align: sub;
-    background-color: white;
-    color: black;
-    padding: 6px;
-    padding-top: 8px;
-    padding-bottom: 0;
-    border-radius: 6px;
-    border: 1px #0F2E3D solid;
-    width: 180px;
-  }
-  
-  
-  @media screen and (max-width: 768px) {
-    .distill-site-nav .algolia-autocomplete {
-      display: none;
-      visibility: hidden;
-    }
-    .distill-site-nav.responsive .algolia-autocomplete {
-      display: inline-block;
-      visibility: visible;
-    }
-    .distill-site-nav.responsive .algolia-autocomplete .aa-dropdown-menu {
-      margin-left: 0;
-      width: 400px;
-      max-height: 400px;
-    }
-  }
-  
-  .algolia-autocomplete .aa-input, .algolia-autocomplete .aa-hint {
-    width: 90%;
-    outline: none;
-    border: none;
-  }
-  
-  .algolia-autocomplete .aa-hint {
-    color: #999;
-  }
-  .algolia-autocomplete .aa-dropdown-menu {
-    width: 550px;
-    max-height: 70vh;
-    overflow-x: visible;
-    overflow-y: scroll;
-    padding: 5px;
-    margin-top: 3px;
-    margin-left: -150px;
-    background-color: #fff;
-    border-radius: 5px;
-    border: 1px solid #999;
-    border-top: none;
-  }
-  
-  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion {
-    cursor: pointer;
-    padding: 5px 4px;
-    border-bottom: 1px solid #eee;
-  }
-  
-  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion:last-of-type {
-    border-bottom: none;
-    margin-bottom: 2px;
-  }
-  
-  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item {
-    overflow: hidden;
-    font-size: 0.8em;
-    line-height: 1.4em;
-  }
-  
-  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item h3 {
-    font-size: 1rem;
-    margin-block-start: 0;
-    margin-block-end: 5px;
-  }
-  
-  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item-description {
-    display: inline-block;
-    overflow: hidden;
-    height: 2.8em;
-    width: 80%;
-    margin-right: 4%;
-  }
-  
-  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item-preview {
-    display: inline-block;
-    width: 15%;
-  }
-  
-  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item-preview img {
-    height: 3em;
-    width: auto;
-    display: none;
-  }
-  
-  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item-preview img[src] {
-    display: initial;
-  }
-  
-  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion.aa-cursor {
-    background-color: #eee;
-  }
-  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion em {
-    font-weight: bold;
-    font-style: normal;
-  }
-  
-  </style>
-  
-  
   <!--/radix_placeholder_navigation_in_header-->
   <!--radix_placeholder_distill-->
   
@@ -2032,285 +1436,259 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </script>
   
   <!--/radix_placeholder_distill-->
-  <script src="site_libs/popper-2.6.0/popper.min.js"></script>
-  <link href="site_libs/tippy-6.2.7/tippy.css" rel="stylesheet" />
-  <link href="site_libs/tippy-6.2.7/tippy-light-border.css" rel="stylesheet" />
-  <script src="site_libs/tippy-6.2.7/tippy.umd.min.js"></script>
-  <script src="site_libs/anchor-4.2.2/anchor.min.js"></script>
-  <script src="site_libs/bowser-1.9.3/bowser.min.js"></script>
-  <script src="site_libs/webcomponents-2.0.0/webcomponents.js"></script>
-  <script src="site_libs/distill-2.2.21/template.v2.js"></script>
+  <script src="status-and-centrality-measures-in-the-iachr-network_files/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+  <script src="status-and-centrality-measures-in-the-iachr-network_files/popper-2.6.0/popper.min.js"></script>
+  <link href="status-and-centrality-measures-in-the-iachr-network_files/tippy-6.2.7/tippy.css" rel="stylesheet" />
+  <link href="status-and-centrality-measures-in-the-iachr-network_files/tippy-6.2.7/tippy-light-border.css" rel="stylesheet" />
+  <script src="status-and-centrality-measures-in-the-iachr-network_files/tippy-6.2.7/tippy.umd.min.js"></script>
+  <script src="status-and-centrality-measures-in-the-iachr-network_files/anchor-4.2.2/anchor.min.js"></script>
+  <script src="status-and-centrality-measures-in-the-iachr-network_files/bowser-1.9.3/bowser.min.js"></script>
+  <script src="status-and-centrality-measures-in-the-iachr-network_files/webcomponents-2.0.0/webcomponents.js"></script>
+  <script src="status-and-centrality-measures-in-the-iachr-network_files/distill-2.2.21/template.v2.js"></script>
   <!--radix_placeholder_site_in_header-->
   <!--/radix_placeholder_site_in_header-->
 
 
 </head>
 
-<body class="layout-listing">
+<body>
 
 <!--radix_placeholder_front_matter-->
 
 <script id="distill-front-matter" type="text/json">
-{"title":"Friends of the Court","authors":[]}
+{"title":"Status and Centrality Measures in the IAcHR Network","description":"A look at the status measures of the network","authors":[{"author":"Santiago Virgüez","authorURL":"#","affiliation":"&nbsp;","affiliationURL":"#","orcidID":""}],"publishedDate":"2022-02-16T00:00:00.000-05:00","citationText":"Virgüez, 2022"}
 </script>
 
 <!--/radix_placeholder_front_matter-->
 <!--radix_placeholder_navigation_before_body-->
-<header class="header header--fixed" role="banner">
-<nav class="distill-site-nav distill-site-header">
-<div class="nav-left">
-<a href="index.html" class="title">Friends of the Court</a>
-<input id="distill-search" class="nav-search hidden" type="text" placeholder="Search..."/>
-</div>
-<div class="nav-right">
-<a href="index.html">Home</a>
-<a href="about.html">About</a>
-<a href="javascript:void(0);" class="nav-toggle">&#9776;</a>
-</div>
-</nav>
-</header>
 <!--/radix_placeholder_navigation_before_body-->
 <!--radix_placeholder_site_before_body-->
 <!--/radix_placeholder_site_before_body-->
-<!--radix_placeholder_article_listing-->
-
-
-<script type="application/javascript">
-
-function init_posts_list() {
-
-  function load_image(img) {
-    var src = $(img).attr('data-src');
-    if (src) {
-      $(img).attr('src', src);
-      $(img).on("load", function() {
-        img.removeAttribute('data-src');
-      });
-    }
-  }
-
-  function set_posts_visible(posts, visible) {
-    if (visible) {
-
-      // show bottom border by default
-      $(posts).removeClass('post-preview-last');
-
-      // apply limits if need be
-      var max_posts = 25;
-      var apply_limits = $('.posts-container').hasClass('posts-apply-limit');
-      if (apply_limits && posts.length > max_posts) {
-        posts = $(posts).slice(0, max_posts);
-      } else {
-        $('.posts-more a').addClass('hidden');
-      }
-
-      // apply last style
-      $(posts.slice(-1)[0]).addClass('post-preview-last');
-
-      $(posts).removeClass('hidden');
-      $(posts).find('img[data-src]').each(function(i, img) {
-        load_image(img);
-      });
-    } else {
-      $(posts).addClass('hidden');
-    }
-  }
-
-  function apply_hash_filter() {
-
-    // clear active state
-    $('.categories .active').removeClass('active');
-
-    // mark all posts invisible to start
-    set_posts_visible($('.posts-list').children('a'), false);
-
-    // if we have a hash filter
-    if (window.location.hash && window.location.hash.startsWith("#category:")) {
-
-      // mark posts that match the category visible
-      var page_category = window.location.hash.replace(/^#category:/, "");
-      page_category = decodeURIComponent(page_category)
-      var posts = $('.post-metadata').map(function(idx, script) {
-        var metadata = $.parseJSON($(script).html());
-        var post = null;
-        $.each(metadata.categories, function(idx, category) {
-          category = category.replace(/ /g,"_");
-          if ((page_category || '').toLowerCase() === "articles" || category === page_category) {
-            post = $(script).parent().get();
-            return false;
-          }
-        });
-        return post;
-      });
-      set_posts_visible(posts, true);
-
-      // mark the hash active
-      $('.categories li>a[href="' + decodeURIComponent(window.location.hash) + '"]').addClass('active');
-
-      // update the list_caption
-      var list_caption = $('.posts-list-caption');
-      var caption = (page_category || '').toLowerCase() === "articles"
-        ? list_caption.attr('data-caption')
-        : ('Category: ' + page_category.replace(/_/g," "));
-      list_caption.text(caption);
-
-    } else {
-
-      // no hash filter, make all posts visible (subject to max display)
-      set_posts_visible($('.posts-list').children(), true);
-
-      // reset list caption
-      var list_caption = $('.posts-list-caption');
-      list_caption.text(list_caption.attr('data-caption'));
-
-
-    }
-  }
-
-  // more articles
-  function apply_post_limits(apply) {
-    if (apply) {
-      $('.posts-container').addClass('posts-apply-limit');
-      $('.posts-more a').removeClass('hidden');
-    } else {
-      $('.posts-container').removeClass('posts-apply-limit');
-      $('.posts-more a').addClass('hidden');
-    }
-  }
-
-  // click handling for tags
-  $('.dt-tag').click(function(ev) {
-    window.location.hash = '#category:' + $(this).text().replace(/ /g, "_");
-    return false;
-  })
-
-  // hash filter handling
-  apply_hash_filter();
-  $(window).on('hashchange',function() {
-    apply_post_limits(true);
-    apply_hash_filter();
-  });
-
-  // more articles link
-  $('.posts-more a').click(function(e) {
-    e.preventDefault();
-    apply_post_limits(false);
-    apply_hash_filter();
-    return false;
-  });
-
-}
-
-</script>
-
-
-
-<div class="posts-container posts-apply-limit l-page">
-<div class="posts-list">
-<h1 class="posts-list-caption" data-caption="Friends of the Court">Friends of the Court</h1>
-<a href="posts/2022-02-16-status-and-centrality-measures-in-the-iachr-network/" class="post-preview">
-<script class="post-metadata" type="text/json">{"categories":[]}</script>
-<div class="metadata">
-<div class="publishedDate">Feb. 16, 2022</div>
-<div class="dt-authors">
-<div class="dt-author">Santiago Virgüez</div>
-</div>
-</div>
-<div class="thumbnail">
-<img src="posts/2022-02-16-status-and-centrality-measures-in-the-iachr-network/status-and-centrality-measures-in-the-iachr-network_files/figure-html5/unnamed-chunk-2-1.png"/>
-</div>
-<div class="description">
-<h2>Status and Centrality Measures in the IAcHR Network</h2>
-<div class="dt-tags"></div>
-<p>A look at the status measures of the network</p>
-</div>
-</a>
-<a href="posts/2022-02-09-degree-and-centrality-in-the-iachr-network/" class="post-preview">
-<script class="post-metadata" type="text/json">{"categories":[]}</script>
-<div class="metadata">
-<div class="publishedDate">Feb. 9, 2022</div>
-<div class="dt-authors">
-<div class="dt-author">Santiago Virgüez</div>
-</div>
-</div>
-<div class="thumbnail">
-<img src="posts/2022-02-09-degree-and-centrality-in-the-iachr-network/degree-and-centrality-in-the-iachr-network_files/figure-html5/unnamed-chunk-9-1.png"/>
-</div>
-<div class="description">
-<h2>Degree and Centrality in the IAcHR Network</h2>
-<div class="dt-tags"></div>
-<p>Degree and centrality analysis usign the network data</p>
-</div>
-</a>
-<a href="posts/2022-02-02-describing-the-network-data/" class="post-preview">
-<script class="post-metadata" type="text/json">{"categories":[]}</script>
-<div class="metadata">
-<div class="publishedDate">Feb. 2, 2022</div>
-<div class="dt-authors">
-<div class="dt-author">Santiago Virgüez</div>
-</div>
-</div>
-<div class="thumbnail">
-<img/>
-</div>
-<div class="description">
-<h2>Describing the Network Data</h2>
-<div class="dt-tags"></div>
-<p>From raw data to network data</p>
-</div>
-</a>
-<a href="posts/2022-01-26-project-and-network-data/" class="post-preview">
-<script class="post-metadata" type="text/json">{"categories":[]}</script>
-<div class="metadata">
-<div class="publishedDate">Jan. 27, 2022</div>
-<div class="dt-authors">
-<div class="dt-author">Santiago Virgüez</div>
-</div>
-</div>
-<div class="thumbnail">
-<img/>
-</div>
-<div class="description">
-<h2>Description and Network Data</h2>
-<div class="dt-tags"></div>
-<p>Read about the project and the network data</p>
-</div>
-</a>
-<a href="posts/welcome/" class="post-preview">
-<script class="post-metadata" type="text/json">{"categories":[]}</script>
-<div class="metadata">
-<div class="publishedDate">Jan. 26, 2022</div>
-<div class="dt-authors">
-<div class="dt-author">Santiago Virgüez</div>
-</div>
-</div>
-<div class="thumbnail">
-<img/>
-</div>
-<div class="description">
-<h2>Welcome!</h2>
-<div class="dt-tags"></div>
-<p>This is my new blog 'Friends of the Court'. I hope you enjoy 
-reading about networks of amici actors in the Inter-American Court of Human Rights</p>
-</div>
-</a>
-</div>
-<div class="posts-more">
-<a href="#">More articles &raquo;</a>
-</div>
-</div>
-<!--/radix_placeholder_article_listing-->
 
 <div class="d-title">
-<h1>Friends of the Court</h1>
+<h1>Status and Centrality Measures in the IAcHR Network</h1>
 <!--radix_placeholder_categories-->
 <!--/radix_placeholder_categories-->
-
+<p>A look at the status measures of the network</p>
 </div>
 
+<div class="d-byline">
+  Santiago Virgüez  
+  
+<br/>2022-02-16
+</div>
 
 <div class="d-article">
-<div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<h3 id="recap-affiliation-network" class="tabset">Recap Affiliation network</h3>
+<p>Let’s organize the affiliation matrix (actor by case) first:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'>#Affiliation network data</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://igraph.org'>igraph</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://tidyr.tidyverse.org'>tidyr</a></span><span class='op'>)</span>
+<span class='va'>data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/utils/read.table.html'>read.csv</a></span><span class='op'>(</span><span class='st'>"CleanedData.csv"</span><span class='op'>)</span>
+<span class='co'>##New column count</span>
+<span class='va'>data</span><span class='op'>$</span><span class='va'>count</span> <span class='op'>&lt;-</span> <span class='fl'>1</span>
+
+<span class='co'>##Gather the data at case level</span>
+<span class='va'>lev_data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://tidyr.tidyverse.org/reference/pivot_wider.html'>pivot_wider</a></span><span class='op'>(</span><span class='va'>data</span>,id_cols <span class='op'>=</span> <span class='va'>CaseID</span>, names_from <span class='op'>=</span> <span class='va'>`Name.of.Amicus`</span>, 
+                        values_from <span class='op'>=</span> <span class='va'>count</span>, values_fn <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>count <span class='op'>=</span> <span class='va'>length</span><span class='op'>)</span>, 
+                        values_fill <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>count <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span><span class='op'>)</span>
+
+<span class='co'>##transpose lev_data to have amici grouped by case</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://r-datatable.com'>data.table</a></span><span class='op'>)</span>
+<span class='va'>T_lev_data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://Rdatatable.gitlab.io/data.table/reference/transpose.html'>transpose</a></span><span class='op'>(</span><span class='va'>lev_data</span>,<span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>rownames</a></span><span class='op'>(</span><span class='va'>T_lev_data</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span><span class='op'>(</span><span class='va'>lev_data</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span><span class='op'>(</span><span class='va'>T_lev_data</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='va'>lev_data</span><span class='op'>$</span><span class='va'>CaseID</span>
+<span class='va'>T_lev_data</span> <span class='op'>&lt;-</span> <span class='va'>T_lev_data</span><span class='op'>[</span><span class='op'>-</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>)</span>,<span class='op'>]</span>
+
+<span class='co'>##create affiliation network graph using 'igraph'</span>
+<span class='va'>Aff_network</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/igraph/man/graph_from_incidence_matrix.html'>graph.incidence</a></span><span class='op'>(</span><span class='va'>T_lev_data</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<h3 id="ploting-the-affiliation-network" class="tabset">Ploting the affiliation network</h3>
+<p>We haven’t provided a visualization of the affiliation network yet. Let’s plot it.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span><span class='op'>(</span><span class='va'>Aff_network</span>, vertex.label<span class='op'>=</span><span class='cn'>NA</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="status-and-centrality-measures-in-the-iachr-network_files/figure-html5/unnamed-chunk-2-1.png" width="624" /></p>
+</div>
+<p>Remember that in this affiliation network, so there are two types of nodes: one type for the amici actors and another type for the legal cases (case 16, case 18 …) to which the actors belong. Ties then connect the actors to those cases. So, as bipartite network it is better to plot the edges between the 2 types of nodes (the orange/circular nodes represent the amici actors, while the squared/blue nodes represent the cases):</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/pkg/igraph/man/V.html'>V</a></span><span class='op'>(</span><span class='va'>Aff_network</span><span class='op'>)</span><span class='op'>$</span><span class='va'>color</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"orange"</span>, <span class='st'>"steel blue"</span><span class='op'>)</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/pkg/igraph/man/V.html'>V</a></span><span class='op'>(</span><span class='va'>Aff_network</span><span class='op'>)</span><span class='op'>$</span><span class='va'>type</span><span class='op'>+</span><span class='fl'>1</span><span class='op'>]</span>
+<span class='fu'><a href='https://rdrr.io/pkg/igraph/man/V.html'>V</a></span><span class='op'>(</span><span class='va'>Aff_network</span><span class='op'>)</span><span class='op'>$</span><span class='va'>shape</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"circle"</span>, <span class='st'>"square"</span><span class='op'>)</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/pkg/igraph/man/V.html'>V</a></span><span class='op'>(</span><span class='va'>Aff_network</span><span class='op'>)</span><span class='op'>$</span><span class='va'>type</span><span class='op'>+</span><span class='fl'>1</span><span class='op'>]</span>
+
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span><span class='op'>(</span><span class='va'>Aff_network</span>, vertex.label<span class='op'>=</span><span class='cn'>NA</span>, vertex.size<span class='op'>=</span><span class='fl'>7</span>, layout<span class='op'>=</span><span class='va'>layout.bipartite</span><span class='op'>)</span> 
+</code></pre>
+</div>
+<p><img src="status-and-centrality-measures-in-the-iachr-network_files/figure-html5/unnamed-chunk-3-1.png" width="624" /></p>
+</div>
+<h3 id="degree-centrality-by-node.tabsetg">Degree centrality by node{.tabset}g</h3>
+<p>In the last post, I presented centrality measures for the one matrix (actor x actor), which was aimed to show the ties between actors by virtue of their participation in the same cases. Nevertheless, we saw that actors such as the Colombian NGO ‘Dejusticia’ had a higher degree of centrality due to the fact that they participated in (only) one case where a greater number of other amici actors participated. These actors were not central in the amici network, they just happen to be part of a really famous case.</p>
+<p>So, to have a better understanding of the centrality of the actors it is necessary to work with the affiliation network.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'>#data frame for the nodes in the affiliation network</span>
+<span class='va'>aff.nodes</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>name<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/pkg/igraph/man/V.html'>V</a></span><span class='op'>(</span><span class='va'>Aff_network</span><span class='op'>)</span><span class='op'>$</span><span class='va'>name</span>, degree<span class='op'>=</span><span class='fu'>igraph</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/igraph/man/degree.html'>degree</a></span><span class='op'>(</span><span class='va'>Aff_network</span><span class='op'>)</span><span class='op'>)</span>
+
+<span class='co'>#data frame for the actors nodes</span>
+<span class='va'>aff.nodes_amici</span> <span class='op'>&lt;-</span> <span class='va'>aff.nodes</span><span class='op'>[</span><span class='op'>-</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>404</span><span class='op'>:</span><span class='fl'>482</span><span class='op'>)</span>,<span class='op'>]</span>
+<span class='co'>#data frame for the cases nodes</span>
+<span class='va'>aff.nodes_cases</span> <span class='op'>&lt;-</span> <span class='va'>aff.nodes</span><span class='op'>[</span><span class='op'>-</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>403</span><span class='op'>)</span>,<span class='op'>]</span>
+</code></pre>
+</div>
+</div>
+<p>Now we can see the distribution of the centrality measures for each types of nodes. As you can see, both distributions are skewed towards zero, indicating the low degree centrality of the actors/cases.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'>#distribution for actors</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/hist.html'>hist</a></span><span class='op'>(</span><span class='va'>aff.nodes_amici</span><span class='op'>$</span><span class='va'>degree</span>, main <span class='op'>=</span> <span class='st'>"Degree Distribution Actors to Cases"</span>, xlab <span class='op'>=</span> <span class='st'>"# Cases in which an actor participated"</span><span class='op'>)</span>
+</code></pre>
+</div>
+<img src="status-and-centrality-measures-in-the-iachr-network_files/figure-html5/unnamed-chunk-5-1.png" width="624" />
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'>#distribution for cases</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/hist.html'>hist</a></span><span class='op'>(</span><span class='va'>aff.nodes_cases</span><span class='op'>$</span><span class='va'>degree</span>, main <span class='op'>=</span> <span class='st'>"Degree Distribution Cases to Actors"</span>, xlab <span class='op'>=</span> <span class='st'>"# Actors that participated in the case"</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="status-and-centrality-measures-in-the-iachr-network_files/figure-html5/unnamed-chunk-5-2.png" width="624" /></p>
+</div>
+<p>We can also see the actors and cases with the highest degree of centrality in the affiliation network:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://dplyr.tidyverse.org'>dplyr</a></span><span class='op'>)</span>
+<span class='co'>#top 3 actors</span>
+<span class='fu'><a href='https://dplyr.tidyverse.org/reference/arrange.html'>arrange</a></span><span class='op'>(</span><span class='va'>aff.nodes_amici</span>, <span class='fu'><a href='https://dplyr.tidyverse.org/reference/desc.html'>desc</a></span><span class='op'>(</span><span class='va'>degree</span><span class='op'>)</span><span class='op'>)</span><span class='op'><a href='https://rdrr.io/pkg/magrittr/man/pipe.html'>%&gt;%</a></span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>                                                                                                         name
+Amnesty International                                                                   Amnesty International
+Minnesota Lawyers International Human Rights Committee Minnesota Lawyers International Human Rights Committee
+The International Human Rights Law Group                             The International Human Rights Law Group
+                                                       degree
+Amnesty International                                       9
+Minnesota Lawyers International Human Rights Committee      3
+The International Human Rights Law Group                    3</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'>#top 3 cases</span>
+<span class='fu'><a href='https://dplyr.tidyverse.org/reference/arrange.html'>arrange</a></span><span class='op'>(</span><span class='va'>aff.nodes_cases</span>, <span class='fu'><a href='https://dplyr.tidyverse.org/reference/desc.html'>desc</a></span><span class='op'>(</span><span class='va'>degree</span><span class='op'>)</span><span class='op'>)</span><span class='op'><a href='https://rdrr.io/pkg/magrittr/man/pipe.html'>%&gt;%</a></span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>    name degree
+152  152     46
+203  203     41
+167  167     32</code></pre>
+</div>
+<p>As expected, international organizations have a higher degree centrality, that is participation in a higher number of cases, due to the fact that they have political interests across different countries, while local NGOs focus on legal cases from their base country. In terms of the cases, it is possible to see that the ones that attracted a greater number of amicus briefs were:</p>
+<ul>
+<li>Artavia Murillo et al. (“In vitro fertilization”) v. Costa Rica. This case concerns human rights violations resulting from the State’s general prohibition of the practice of in vitro fertilization.</li>
+<li>Atala Riffo and Daughters v. Chile. This case concerns the discriminatory treatment and arbitrary interference in the private and family life of a lesbian mother, Ms. Karen Atala Riffo.</li>
+<li>Nogueira de Carvalho et al. V. Brazil. Murder of Gilson Nogueira de Carvalho, a lawyer and human rights defender and the State failure to undertake an effective investigation into his death and failed to punish the responsible parties.</li>
+</ul>
+<h3 id="eigenvector-and-bonacich-power-centrality.tabsetg">Eigenvector and Bonacich power centrality{.tabset}g</h3>
+<p>We can also compare different measures of centrality, including the eigen vector and Bonacich power. To do so, we need to add the data to the data frame of each type of node</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'>#eigen vector centrality</span>
+<span class='va'>temp</span><span class='op'>&lt;-</span><span class='fu'><a href='https://rdrr.io/pkg/igraph/man/centr_eigen.html'>centr_eigen</a></span><span class='op'>(</span><span class='va'>Aff_network</span>,directed<span class='op'>=</span><span class='cn'>F</span><span class='op'>)</span>
+<span class='va'>aff.nodes</span><span class='op'>$</span><span class='va'>eigen</span><span class='op'>&lt;-</span><span class='va'>temp</span><span class='op'>$</span><span class='va'>vector</span>
+
+<span class='co'>#bonacich power centrality</span>
+<span class='va'>aff.nodes</span><span class='op'>$</span><span class='va'>bonpow</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/igraph/man/power_centrality.html'>power_centrality</a></span><span class='op'>(</span><span class='va'>Aff_network</span>, exponent <span class='op'>=</span> <span class='fl'>0.9</span><span class='op'>)</span>
+
+<span class='va'>aff.nodes_amici</span> <span class='op'>&lt;-</span> <span class='va'>aff.nodes</span><span class='op'>[</span><span class='op'>-</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>404</span><span class='op'>:</span><span class='fl'>482</span><span class='op'>)</span>,<span class='op'>]</span>
+<span class='va'>aff.nodes_cases</span> <span class='op'>&lt;-</span> <span class='va'>aff.nodes</span><span class='op'>[</span><span class='op'>-</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>403</span><span class='op'>)</span>,<span class='op'>]</span>
+</code></pre>
+</div>
+</div>
+<p>Then we can plot the distribution of the three measures of centrality. As you can see, there are not many central actors/cases in this network</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'>#plot distribution centrality measures</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://ggplot2.tidyverse.org'>ggplot2</a></span><span class='op'>)</span>
+<span class='va'>aff.nodes_amici</span><span class='op'><a href='https://rdrr.io/pkg/magrittr/man/pipe.html'>%&gt;%</a></span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='op'>-</span><span class='va'>name</span><span class='op'>)</span> <span class='op'><a href='https://rdrr.io/pkg/magrittr/man/pipe.html'>%&gt;%</a></span> 
+  <span class='fu'><a href='https://tidyr.tidyverse.org/reference/gather.html'>gather</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'><a href='https://rdrr.io/pkg/magrittr/man/pipe.html'>%&gt;%</a></span> 
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span><span class='va'>value</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_histogram.html'>geom_histogram</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span>
+  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/facet_wrap.html'>facet_wrap</a></span><span class='op'>(</span><span class='op'>~</span><span class='va'>key</span>, scales <span class='op'>=</span> <span class='st'>"free"</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="status-and-centrality-measures-in-the-iachr-network_files/figure-html5/unnamed-chunk-8-1.png" width="624" /></p>
+</div>
+<p>Because the ties we are looking at are the connections between actors and cases, the eigenvector simply shows what actors are linked to the most central or ‘popular’ cases. On the other hand, the bonacich power centrality shows the actors that participated on the cases were no other people participated (therefore the actors with greater power of influence).</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'>#top 3 actors with highest eigenvector centrality</span>
+<span class='fu'><a href='https://dplyr.tidyverse.org/reference/arrange.html'>arrange</a></span><span class='op'>(</span><span class='va'>aff.nodes_amici</span>, <span class='fu'><a href='https://dplyr.tidyverse.org/reference/desc.html'>desc</a></span><span class='op'>(</span><span class='va'>eigen</span><span class='op'>)</span><span class='op'>)</span><span class='op'><a href='https://rdrr.io/pkg/magrittr/man/pipe.html'>%&gt;%</a></span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>                                                                                                                                                                                                                                                                                       name
+Centro de Estudios of Derecho, Justicia y Sociedad (DEJUSTICIA)                                                                                                                                                             Centro de Estudios of Derecho, Justicia y Sociedad (DEJUSTICIA)
+Viviana Bohórquez Monsalve, Beatriz Galli, Alma Beltra?n y Puga, A?lvaro Her-rero, Gastón Chillier, Lourdes Bascary and Agustina Ramón Michel Viviana Bohórquez Monsalve, Beatriz Galli, Alma Beltra?n y Puga, A?lvaro Her-rero, Gastón Chillier, Lourdes Bascary and Agustina Ramón Michel
+Alexandra Loría Beeche                                                                                                                                                                                                                                               Alexandra Loría Beeche
+                                                                                                                                              degree
+Centro de Estudios of Derecho, Justicia y Sociedad (DEJUSTICIA)                                                                                    2
+Viviana Bohórquez Monsalve, Beatriz Galli, Alma Beltra?n y Puga, A?lvaro Her-rero, Gastón Chillier, Lourdes Bascary and Agustina Ramón Michel      1
+Alexandra Loría Beeche                                                                                                                             1
+                                                                                                                                                  eigen
+Centro de Estudios of Derecho, Justicia y Sociedad (DEJUSTICIA)                                                                               0.1577985
+Viviana Bohórquez Monsalve, Beatriz Galli, Alma Beltra?n y Puga, A?lvaro Her-rero, Gastón Chillier, Lourdes Bascary and Agustina Ramón Michel 0.1473282
+Alexandra Loría Beeche                                                                                                                        0.1473282
+                                                                                                                                                  bonpow
+Centro de Estudios of Derecho, Justicia y Sociedad (DEJUSTICIA)                                                                               -0.6041584
+Viviana Bohórquez Monsalve, Beatriz Galli, Alma Beltra?n y Puga, A?lvaro Her-rero, Gastón Chillier, Lourdes Bascary and Agustina Ramón Michel -0.3000833
+Alexandra Loría Beeche                                                                                                                        -0.3000833</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'>#top 3 actors with highest bonacich power centrality</span>
+<span class='fu'><a href='https://dplyr.tidyverse.org/reference/arrange.html'>arrange</a></span><span class='op'>(</span><span class='va'>aff.nodes_amici</span>, <span class='fu'><a href='https://dplyr.tidyverse.org/reference/desc.html'>desc</a></span><span class='op'>(</span><span class='va'>bonpow</span><span class='op'>)</span><span class='op'>)</span><span class='op'><a href='https://rdrr.io/pkg/magrittr/man/pipe.html'>%&gt;%</a></span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>                                                                                                                                                           name
+Fernando Linares Beltranena                                                                                                         Fernando Linares Beltranena
+Oscar Augusto Díaz Urquizú, former Director of the Treasury Police of Guatemala Oscar Augusto Díaz Urquizú, former Director of the Treasury Police of Guatemala
+The International Commission of Jurists                                                                                 The International Commission of Jurists
+                                                                                degree
+Fernando Linares Beltranena                                                          1
+Oscar Augusto Díaz Urquizú, former Director of the Treasury Police of Guatemala      1
+The International Commission of Jurists                                              1
+                                                                                eigen
+Fernando Linares Beltranena                                                         0
+Oscar Augusto Díaz Urquizú, former Director of the Treasury Police of Guatemala     0
+The International Commission of Jurists                                             0
+                                                                                  bonpow
+Fernando Linares Beltranena                                                     2.624369
+Oscar Augusto Díaz Urquizú, former Director of the Treasury Police of Guatemala 2.624369
+The International Commission of Jurists                                         2.624369</code></pre>
+</div>
+<p>Finally, we can correlate the different measures of centrality. As you can see all of the measures have negative correlation with each other.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/tidymodels/corrr'>corrr</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/mhahsler/seriation'>seriation</a></span><span class='op'>)</span>
+
+<span class='va'>cent.corr</span><span class='op'>&lt;-</span><span class='va'>aff.nodes_amici</span> <span class='op'><a href='https://rdrr.io/pkg/magrittr/man/pipe.html'>%&gt;%</a></span> 
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>degree</span>,<span class='va'>eigen</span>,<span class='va'>bonpow</span><span class='op'>)</span><span class='op'><a href='https://rdrr.io/pkg/magrittr/man/pipe.html'>%&gt;%</a></span>
+  <span class='fu'><a href='https://corrr.tidymodels.org/reference/correlate.html'>correlate</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'><a href='https://rdrr.io/pkg/magrittr/man/pipe.html'>%&gt;%</a></span>
+  <span class='fu'><a href='https://corrr.tidymodels.org/reference/rearrange.html'>rearrange</a></span><span class='op'>(</span><span class='op'>)</span>
+
+<span class='va'>cent.corr</span>
+</code></pre>
+</div>
+<pre><code># A tibble: 3 × 4
+  term    degree   eigen  bonpow
+  &lt;chr&gt;    &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+1 degree NA      -0.0194 -0.0515
+2 eigen  -0.0194 NA      -0.0402
+3 bonpow -0.0515 -0.0402 NA     </code></pre>
+</div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
