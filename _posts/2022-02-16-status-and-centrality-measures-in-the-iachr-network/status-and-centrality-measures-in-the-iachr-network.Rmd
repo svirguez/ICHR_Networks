@@ -56,7 +56,7 @@ plot(Aff_network, vertex.label=NA, vertex.size=7, layout=layout.bipartite)
 ```
 
 
-### Degree centrality  by node{.tabset}g
+### Degree centrality by node{.tabset}
 
 In the last post, I presented centrality measures for the one matrix (actor x actor), which was aimed to show the ties between actors by virtue of their participation in the same cases. Nevertheless, we saw that actors such as the Colombian NGO 'Dejusticia' had a higher degree of centrality due to the fact that they participated in (only) one case where a greater number of other amici actors participated. These actors were not central in the amici network, they just happen to be part of a really famous case.
 
@@ -99,7 +99,7 @@ As expected, international organizations have a higher degree centrality, that i
 - Atala Riffo and Daughters v. Chile. This case concerns the discriminatory treatment and arbitrary interference in the private and family life of a lesbian mother, Ms. Karen Atala Riffo.
 - Nogueira de Carvalho et al. V. Brazil. Murder of Gilson Nogueira de Carvalho, a lawyer and human rights defender and the State failure to undertake an effective investigation into his death and failed to punish the responsible parties. 
 
-### Eigenvector and Bonacich power centrality{.tabset}g
+### Eigenvector and Bonacich power centrality{.tabset}
 
 We can also compare different measures of centrality, including the eigen vector and Bonacich power. To do so, we need to add the data to the data frame of each type of node
 

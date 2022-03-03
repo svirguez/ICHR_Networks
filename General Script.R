@@ -164,4 +164,68 @@ A<-aff.nodes_amici %>%
 
 install.packages('seriation')
 
-a
+####################################################################################################
+
+#Betweenness centrality
+aff.nodes$between<-igraph::betweenness(Aff_network, directed=TRUE)
+amici.nodes$between<-igraph::betweenness(amici_ad, directed=TRUE)
+case.nodes$between<-igraph::betweenness(case_ad, directed=TRUE)
+
+#Betweenness centralization
+
+centr_betw(Aff_network,directed=F)$centralization
+centr_betw(amici_ad,directed=F)$centralization
+centr_betw(case_ad,directed=F)$centralization
+
+#Constraint
+
+aff.nodes$constraint<-constraint(Aff_network)
+amici.nodes$constraint<-constraint(amici_ad)
+case.nodes$constraint<-constraint(case_ad)
+
+#clossenes
+
+aff.nodes$close<-igraph::closeness(Aff_network)
+amici.nodes$close<-igraph::closeness(amici_ad)
+case.nodes$close<-igraph::closeness(case_ad)
+
+
+plot(Aff_network)
+
+library(dplyr)
+
+amici.nodes%>%
+  arrange(desc(between))%>%
+  slice(1:5)
+
+##########################################Co-Ocurrence Data##################################
+
+library(cooccur)
+library(visNetwork)
+library(tidyr)
+
+
+data <- read.csv("Cleaned_Data.csv")
+##New column count
+data$count <- 1
+
+##Gather the data at case level
+lev_data <- pivot_wider(data,id_cols = CaseID, names_from = "Name", values_from = count, values_fn = list(count = length), values_fill = list(count = 0))
+
+library(data.table)
+T_lev_data <- transpose(lev_data,)
+rownames(T_lev_data) <- colnames(lev_data)
+colnames(T_lev_data) <- lev_data$CaseID
+T_lev_data <- T_lev_data[-c(1),]
+
+
+co <- print(cooccur(T_lev_data, spp_names = TRUE))
+
+
+
+
+
+
+
+
+

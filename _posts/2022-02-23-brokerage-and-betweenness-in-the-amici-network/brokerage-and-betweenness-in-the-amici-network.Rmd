@@ -1,0 +1,127 @@
+---
+title: "Betweenness in the Amici Network"
+description: |
+  Brokerage, betweenness, and other centrality measures
+author:
+  - name: Santiago Virgüez
+date: 2022-02-23
+output:
+  distill::distill_article:
+    self_contained: false
+---
+
+![Amnesty Internation, an influential actor](/Users/SantiagoVirguez/Desktop/ICHR_Networks/_posts/2022-02-23-brokerage-and-betweenness-in-the-amici-network/255270-1444x710.jpeg)
+
+
+### Recap affiliation and one-mode network{.tabset}
+
+Let's organize the data one more time. I'm gonna work again with the one-matrix (actorxactor). As you might remember, this one-mode matrix is a projection of the affiliation network (actorxcase), which means that the actors (the nodes) are tied by virtue of their participation in the same cases.
+
+```{r}
+#Affiliation network data
+library(igraph)
+library(tidyr)
+data <- read.csv("Cleaned_Data.csv")
+##New column count
+data$count <- 1
+
+##Gather the data at case level
+lev_data <- pivot_wider(data,id_cols = CaseID, names_from = `Name`, 
+                        values_from = count, values_fn = list(count = length), 
+                        values_fill = list(count = 0))
+
+##transpose lev_data to have amici grouped by case
+library(data.table)
+T_lev_data <- transpose(lev_data,)
+rownames(T_lev_data) <- colnames(lev_data)
+colnames(T_lev_data) <- lev_data$CaseID
+T_lev_data <- T_lev_data[-c(1),]
+
+##create affiliation network graph using 'igraph'
+Aff_network <- graph.incidence(T_lev_data)
+
+############
+
+#One-Mode matrix (actor x actor)
+
+##extracting the one-mode projection
+Aff_network.pr <- bipartite.projection(Aff_network)
+
+##Actor x actor adjacency matrix
+
+amici_net <- Aff_network.pr$proj1
+
+amici_ad <- graph.adjacency(get.adjacency(amici_net, sparse = FALSE,attr = "weight"))
+
+
+```
+
+
+### Centrality measures by node (amici){.tabset}
+
+Let's obtain the centrality measures by node in order to compare them with the betweenness scores:
+
+```{r}
+library(dplyr)
+#dataframe for the nodes + degree
+amici.nodes<-data.frame(name=V(amici_ad)$name, degree=igraph::degree(amici_ad))
+amici.nodes <- subset(amici.nodes, select = -name)
+
+#eigenvector centrality
+temp<-centr_eigen(amici_ad,directed=F)
+amici.nodes$eigen<-temp$vector
+
+#bonacich power centrality
+amici.nodes$bonpow <- power_centrality(amici_ad, exponent = 0.9)
+
+#top 5 eigenvector centrality
+amici.nodes%>%
+  arrange(desc(eigen))%>%
+  slice(1:5)
+```
+
+First, the eigenvector centrality is showing what actors are linked to other well connected actors. In terms of this network, the eigenvector centrality allow us to see what amici actors focus their participation on 'popular' cases, cases that atract interventions from well connected amici. We cannot say if their 'strategic' behavior is driven by the other participants (du to their popularity) or the impact of the substantive matter discussed in these cases. 
+
+On the other hand, the bonacich power centrality shows the actors that participated on the cases were no other people participated (therefore the actors with greater power of influence). All of these actrs has the same bonachich power score probably because they all filed a brief only once, for a case which wasn't of interest for other actors:
+
+```{r}
+#top 5 bonacich power centrality
+amici.nodes%>%
+  arrange(desc(bonpow))%>%
+  slice(1:5)
+```
+
+
+### Betwenness centrality and network constraint{.tabset}
+
+In order to find the most influential actors in the amici network, it is is necessary to calculate both de closeness and betweenness centrality measures. The closeness centrality  calculates the shortest paths between all nodes, then assigns each node a score based on its sum of shortest paths, this can help find good ‘broadcasters’. Meanwhile, betweenness centrality measures the number of times a node lies on the shortest path between other nodes, which can help us to find the actors who influence the flow around a system.
+
+We might expect that international organizations and well-funded actors have a greater participation in the Inter-American system, with an influential role among local and less endowed actors.
+
+```{r}
+#Closeness centrality
+amici.nodes$close <- igraph::closeness(amici_ad)
+
+amici.nodes%>%
+  arrange(desc(close))%>%
+  slice(1:5)
+
+#Betweenness centrality
+amici.nodes$between<-igraph::betweenness(amici_ad, directed=FALSE)
+
+amici.nodes%>%
+  arrange(desc(between))%>%
+  slice(1:5)
+```
+
+As expected, international actors such as Amnesty International, Women's Link Worldwide, and Interights are among the most influential actors. Likewise, although local, Yale University and the National Autonomous University of Mexico (UNAM) are a good example of well-funded organization with enough capacity to influence the Inter-American system. Furthermore, CEJIL (Center for Justice and International Law) is precisely an organization aimed to contribute to the "full enjoyment of human rights in the Americas through the effective use of Inter-American System tools and other international human rights law protection mechanisms".
+
+As we can see, these centrality measures provide a better understanding of the most influential actors in the IAcHR network. Because this is a 'undirected' network, we cannot provide any measures of brockerage. 
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+
