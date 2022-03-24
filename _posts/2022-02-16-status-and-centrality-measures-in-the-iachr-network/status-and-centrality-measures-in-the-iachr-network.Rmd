@@ -42,7 +42,7 @@ Aff_network <- graph.incidence(T_lev_data)
 
 We haven't provided a visualization of the affiliation network yet. Let's plot it.
 
-```{r}
+```{r, fig.width=14, fig.height=12}
 plot(Aff_network, vertex.label=NA)
 ```
 

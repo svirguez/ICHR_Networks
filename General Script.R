@@ -68,8 +68,8 @@ Aff_network.pr
 amici_net <- Aff_network.pr$proj1
 case_net <- Aff_network.pr$proj2
 
-amici_ad <- graph.adjacency(get.adjacency(amici_net, sparse = FALSE,attr = "weight"))
-case_ad <- graph.adjacency(get.adjacency(case_net, sparse = FALSE,attr = "weight"))
+amici_ad <- graph.adjacency(get.adjacency(amici_net, sparse = FALSE,attr = "weight"), mode = "directed")
+case_ad <- graph.adjacency(get.adjacency(case_net, sparse = FALSE,attr = "weight"), mode = "directed")
 
 #########
 
@@ -219,11 +219,67 @@ colnames(T_lev_data) <- lev_data$CaseID
 T_lev_data <- T_lev_data[-c(1),]
 
 
-co <- print(cooccur(T_lev_data, spp_names = TRUE))
+dt <- read.csv("nodes.csv")
+
+df <- igraph::as_data_frame(amici_ad, 'both')
+
+df$vertices <- df$vertices %>% 
+  left_join(dt, c('name'='id'))
+
+
+a <- df$vertices
+df$vertices$level <- dt$Level
+df$vertices$type <- dt$Type
+
+amici_ad <- graph_from_data_frame(df$edges,
+                                  directed = F,
+                                  vertices = df$vertices)
+
+colrs <- c("blue", "red", "green")
+V(amici_ad)$color <- colrs[V(amici_ad)$level]
+
+plot(case_ad, edge.arrow.size=.4,vertex.label=NA)
 
 
 
+head(igraph::closeness(amici_ad, mode = "all"))
 
+############################ Community Detection ################################
+
+#node data frame
+amici.nodes<-data.frame(name=V(amici_ad)$name,
+                              degree=igraph::degree(amici_ad),
+                              degree.wt=strength(amici_ad),
+                              betweenness=igraph::betweenness(amici_ad, directed=FALSE),
+                              close=igraph::closeness(amici_ad),
+                              constraint=constraint(amici_ad))
+
+temp<-centr_eigen(amici_ad,directed=F)
+amici.nodes$eigen<-temp$vector
+
+
+#Fast and Greedy Community Detection
+
+amici.fg<-cluster_fast_greedy(as.undirected(amici_ad))
+igraph::groups(amici.fg)
+
+plot(amici.fg,amici_ad, vertex.label=NA)
+
+amici.nodes$comm.fg<-amici.fg$membership
+nodes.by.gp(amici.nodes,"comm.fg")
+
+
+#Walktrap
+
+amici.wt<-walktrap.community(amici_ad)
+igraph::groups(alliances.wt)
+
+plot(amici.wt,amici_ad, vertex.label=NA)
+
+
+print(blockmodel(alliances.stat,alliances.wt$membership)$block.model, digits=2)
+alliances.nodes$comm.wt<-alliances.wt$membership
+nodes.by.gp(alliances.nodes,"comm.wt")
 
 
 

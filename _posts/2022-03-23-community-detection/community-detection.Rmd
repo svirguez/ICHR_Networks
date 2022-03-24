@@ -1,0 +1,136 @@
+---
+title: "Community Detection"
+description: |
+  A comparison of community clusters in the IACtHR network using different algorithms
+author:
+  - name: Santiago Virgüez
+date: 2022-03-23
+output:
+  distill::distill_article:
+    self_contained: false
+---
+### Recap affiliation and one-mode network{.tabset}
+
+Let's organize the data one more time. I'm gonna work again with the one-matrix (actorxactor). As you might remember, this one-mode matrix is a projection of the affiliation network (actorxcase), which means that the actors (the nodes) are tied by virtue of their participation in the same cases.
+
+```{r}
+#Affiliation network data
+library(igraph)
+library(tidyr)
+data <- read.csv("Cleaned_Data.csv")
+##New column count
+data$count <- 1
+
+##Gather the data at case level
+lev_data <- pivot_wider(data,id_cols = CaseID, names_from = `Name`, 
+                        values_from = count, values_fn = list(count = length), 
+                        values_fill = list(count = 0))
+
+##transpose lev_data to have amici grouped by case
+library(data.table)
+T_lev_data <- transpose(lev_data,)
+rownames(T_lev_data) <- colnames(lev_data)
+colnames(T_lev_data) <- lev_data$CaseID
+T_lev_data <- T_lev_data[-c(1),]
+
+##create affiliation network graph using 'igraph'
+Aff_network <- graph.incidence(T_lev_data)
+
+############
+
+#One-Mode matrix (actor x actor)
+
+##extracting the one-mode projection
+Aff_network.pr <- bipartite.projection(Aff_network)
+
+##Actor x actor adjacency matrix
+
+amici_net <- Aff_network.pr$proj1
+
+amici_ad <- graph.adjacency(get.adjacency(amici_net, sparse = FALSE,attr = "weight"))
+
+```
+
+Before testing the different methods of community detection, it is important to remember that the one-mode matrix actor x actor is a projection from an affiliation network where amici actors are tied to other amici by virtue of their participation in the same case. What this means is that we expect that the communities among the amici actors correspond to the cases where they participate together, with some exceptions due to multiple participation of some actors in different cases. 
+
+Substantively, the community detection algorithms will not provide too much new information about clustering but it would be interesting to see the outcomes. We may expect that, because of the case clustering, each algorithm will provide a similar result in terms of the communities within the actor x actor network.
+
+```{r}
+#Node data frame
+amici.nodes<-data.frame(name=V(amici_ad)$name,
+                              degree=igraph::degree(amici_ad),
+                              degree.wt=strength(amici_ad),
+                              betweenness=igraph::betweenness(amici_ad, directed=FALSE),
+                              close=igraph::closeness(amici_ad),
+                              constraint=constraint(amici_ad))
+
+temp<-centr_eigen(amici_ad,directed=F)
+amici.nodes$eigen<-temp$vector
+```
+
+### Fast and Greedy Community Detection{.tabset}
+
+```{r, fig.width=14, fig.height=12}
+comm.fg<-cluster_fast_greedy(as.undirected(amici_ad))
+comm.fg
+
+amici.nodes$comm.fg<-comm.fg$membership
+
+plot(comm.fg,amici_ad, vertex.label=NA)
+```
+
+### Walktrap Clustering{.tabset}
+
+```{r, fig.width=14, fig.height=12}
+comm.wt<-walktrap.community(amici_ad)
+comm.wt
+
+amici.nodes$comm.wt<-comm.wt$membership
+
+plot(comm.wt,amici_ad, vertex.label=NA)
+```
+
+### Leading Label Propagation Community Detection{.tabset}
+
+```{r, fig.width=14, fig.height=12}
+comm.lab<-label.propagation.community(as.undirected(amici_ad))
+comm.lab
+
+amici.nodes$comm.wt<-comm.lab$membership
+
+plot(comm.lab,amici_ad, vertex.label=NA)
+```
+
+### Comparing Community Partitions{.tabset}
+
+From what we saw in the figures, it is possible to say that all the partition methods detected similar communities. But to have a better sense of their differences, it is necessary to compare the outcomes.
+
+```{r}
+mods<-c(fastgreedy=modularity(comm.fg), walktrap=modularity(comm.wt), walktrap=modularity(comm.lab))
+mods
+```
+
+As expected, all of the community detection methods seem to have similar value. Even when we compare them using different comparison methods, the results seem to be very close to each other:
+
+```{r}
+compare.algs<-function(alg.a,alg.b,compare.meth=c("vi", "nmi", "split.join", "rand", "adjusted.rand")){
+  #create list of community objects and methods
+  comm.compare<-expand.grid(alg.a=alg.a, alg.b=alg.b, meth=compare.meth, result=NA, stringsAsFactors = FALSE)
+  #compare community partitions using a loop
+  for(i in 1:nrow(comm.compare)){
+    comm1<-get(comm.compare$alg.a[i])
+    comm2<-get(comm.compare$alg.b[i])
+    method<-comm.compare$meth[i]
+    comm.compare$result[i]<-compare(comm1, comm2, method)
+  }
+  return(comm.compare)
+}
+
+compare.algs(alg.a=c("comm.fg","comm.wt"),alg.b="comm.lab")
+```
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
