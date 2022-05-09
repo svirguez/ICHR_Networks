@@ -1,7 +1,7 @@
 ---
 title: "Sitting by the Bench: Amici Network in Colombia"
 description: |
-  Taking a break from the ICtHR amici network, I use original data on amici participation in the Colombian Constitutional Court to do some 'substantive' netwrok analysis.
+  Taking a break from the ICtHR amici network, I use original data on amici participation in the Colombian Constitutional Court to do some 'substantive' network analysis.
 author:
   - name: Santiago Virgüez
     affiliation: University of Massachusetts Amherst
