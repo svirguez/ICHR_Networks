@@ -1,0 +1,247 @@
+---
+title: "Sitting by the Bench: Amici Network in Colombia"
+description: |
+  Taking a break from the ICtHR amici network, I use original data on amici participation in the Colombian Constitutional Court to do some 'substantive' netwrok analysis.
+author:
+  - name: Santiago Virgüez
+    affiliation: University of Massachusetts Amherst
+date: 2022-05-09
+bibliography: bibliography.bib
+output:
+  distill::distill_article:
+    self_contained: false
+---
+
+## Research Question{.tabset}
+
+Given the political role played by the judiciary and its influence in public policy, exerting influence on the courts has become just as important for interest groups as lobbying in congress or approaching administrative agencies. One of the institutional driving belts for interest groups to influence the courts’ rulings are the amicus briefs. Because of their political relevance, a vast literature has focused on the motives, content, and influence of amicus bries, especially in the U.S. context [@collins]. 
+
+More recently, scholars on law and courts have addressed the question of 'who?', and have begun to construct networks based on the amicus briefs. In particular, the work of Box-Steffensmeier and Christenson on network measures of interest group coalitions based on the United States Supreme Court amicus curiae briefs has been deeply influential on how we can use network analysis to understand how interest group coalition strategies change over time and which factors determine whether they work together [@BOXSTEFFENSMEIER201482].
+
+
+Nevertheless, this network literature has focused primarily on interest groups and associations directly interested in the outcome of the cases, rather than the legal reasoning behind them. In addition to interest groups, other actors have also political stakes and legal objectives beyond the immediate outcome, especially around constitutional cases (which set legal precedent). **What players are the most active around the constitutional arena?  Do these players participate together?** 
+
+Investigating this topic is significant for several reasons. Attitudinal and strategic models continue to be the dominant frameworks used to understand judicial politics in the U.S. context, both dismissing the idea that law is an important factor of judicial decision-making. The attitudinal model proposed by Segal and Spaeth argues that neither precedent nor legal doctrine limits judicial actors’ drive to express their ideological positions [@segal_spaeth_2002]. Following a realist approach of adjudication, they believe that law just serves as a disguise of political choices. Likewise, the strategic school, which has stressed the importance of institutional constraints around judges embedded in a political game, has understood the process of judicial decision-making as fundamentally shaped by external factors [@epstein]. As a result, there is little room for ideas about the law, the role of institutional lenses or interpretation frameworks as a crucial factor of judicial action [@gonzalez]. 
+
+Based on sociological institutionalism and cultural approaches to judicial behavior, I argue that judicial action is influenced by the legal visions and cultures/traditions of interpretation provided by multiple actors intervening before the courts. As explained by González-Ocantos, what matters is not what the law says but the cognitive lens through which legal doctrine is interpreted, lens that is not a product of asocial readings of the law by discrete by judicial actors but collectively constituted by complex socialization processes [@gonzalez]. The *legal preferences* of the judges, defined as the views about what can be considered legitimate sources of law and authority, as well as acceptable forms of legal argumentation [@gonzalez], are conditioned by the legal interventions of petitioners, public officials, and, in particular, amici curiae. Understanding the puzzle of judicial decision-making requires understanding how certain legal preferences have become hegemonic and what specific actors have taken part in this process.
+
+### Case and Hypothesis{.tabset}
+
+The Colombian COnstitutional Court (CCC) is a particularly interesting setting to study amici participation since the interventions presented before this court escape the support-oppose model which has been a prevailing principle used in the scholarship on amicus briefs, especially among those focusing on the U.S. Supreme Court. The nature of briefs presented before the CCC Court is different, opening new insights into different uses of the same figure but also presenting new avenues to understand who and in what way different actors influence the court’s activity. While amicus briefs in the US system are usually presented either to support or contradict a claimant, briefs are presented before the Constitutional Court to advise the Court on the case.
+
+Given the nature of amici participation in constitutional review cases in Colombia, I expect the following hypothesis:
+
+**H1: Amici networks in the constitutional arena will be formed around actors focused on the production of legal knowledge, such as universities and think tanks**
+ 
+
+## Sample and Network Data{.tabset}
+
+Based on a stratified sample of 363 constitutional opinions (confidence level of 95% and a 5% margin of error), I extracted the information of the amicus briefs filed in each case and coded some of their attributes. Then, I built an affiliation network where actors are connected by virtue of filing a brief in the same case.
+
+The network data I worked with is a one-mode projection of this affiliation network. This projection is a one-mode matrix ‘actor x actor' where, again, actors are connected by virtue of filing a brief in the same case. It is possible to explore these connections using the interactive graph below: 
+
+```{r, include=FALSE}
+library(igraph)
+library(tidyr)
+library(data.table)
+library(visNetwork)
+library(dplyr)
+library(rmarkdown)
+
+data_CCC <- read.csv("CCC_Amici.csv")
+##New column count
+data_CCC$count <- 1
+
+##Gather the data at case level
+lev_data_CCC <- pivot_wider(data_CCC,id_cols = case, names_from = `amici_name`, 
+                            values_from = count, values_fn = list(count = length), 
+                            values_fill = list(count = 0))
+
+##transpose lev_data to have amici grouped by case
+T_lev_data_CCC <- transpose(lev_data_CCC,)
+rownames(T_lev_data_CCC) <- colnames(lev_data_CCC)
+colnames(T_lev_data_CCC) <- lev_data_CCC$case
+T_lev_data_CCC <- T_lev_data_CCC[-c(1),]
+
+##create affiliation network graph using 'igraph'
+Aff_network_CCC <- graph.incidence(T_lev_data_CCC)
+```
+
+```{r,echo=FALSE}
+#One-Mode matrix (actor x actor)
+##extracting the one-mode projection
+Aff_network_CCC.pr <- bipartite.projection(Aff_network_CCC)
+
+##Actor x actor adjacency matrix
+amici_CCC <- Aff_network_CCC.pr$proj1
+amici_CCC <- graph.adjacency(get.adjacency(amici_CCC, sparse = FALSE,attr = "weight"))
+visIgraph(amici_CCC,layout = "layout_with_kk")
+```
+
+### Network Data Description{.tabset}
+
+What has been called as *Tukey's original five number summary* was intended to describe most basic features of a network: how large it is, how densely connected it is, how compact it is, whether the network is made up of one or more groups, and how clustered are the network members. The following is a basic description of the amici network I am working with:
+
+```{R}
+vcount(amici_CCC)
+ecount(amici_CCC)
+igraph::graph.density(amici_CCC, loops = FALSE)
+igraph::components(amici_CCC)$csize
+diameter(amici_CCC, directed = F)
+transitivity(amici_CCC)
+centr_degree(amici_CCC, loops = FALSE, mode = "total")$centralization
+```
+
+The network has 302 amici actors with 4040 edges. It is possible to see how the graph has a really low density level. This means that most of amici actors do not file amicus briefs very often in the same cases. It has 41 components (subgroups in which all actors are connected), although the most important one connects 242 nodes.
+
+The high transitivity ratio means that this network has a high level of clustering, the tendency to form closed triangles. Likewise, the high level of centralization of this graph shows that the amici actors have a higher level of cohesion or integration between each other.
+
+## Methods{.tabset}
+
+To test my hypothesis a use node-level centrality measures and two statistical test to assess the predominance of legal knowledge production actors in the amici network around constitutional cases.
+
+### Centrality Measures{.tabset}
+
+It makes sense that a network actor who is connected to many other actors of the network is in a prominent position. For non-directed networks, we say this type of actor has high centrality. I use different centrality measures to assess if legal-knowledge production actors have a prominent position in the amici network around constitutional cases.
+
+### Probabilistic Co-Occurrence Network{.tabset}
+
+Based on a probabilistic model for analyzing statistically significant pair‐wise patterns of species co‐occurrence, that is the probability that two actors would co-occur at a frequency less than (or greater than) the observed frequency if the two actors were distributed independently of one another among a set of cases [@veech], I create a co-occurrence network where each actor is represented by a node and an edge connecting two nodes represents the (statistically significant) co-occurrence between those two actors.
+
+This analysis is commonly used in ecology and text mining, where co-occurrence measures how frequently two species are seen together within a sampling site or how frequently two words are present in a single document [See this article written by Brooke Bradley](https://medium.com/analytics-vidhya/how-to-create-co-occurrence-networks-with-the-r-packages-cooccur-and-visnetwork-f6e1ceb1c523), respectively. The R package *cooccur* package allows me to conduct the probabilistic species co-occurrence analysis using my dataset. See [@JSSv069c02].
+
+### ERGM: Dyadic Predictor{.tabset}
+
+ERGM is a true generative statistical model of network structure and characteristics [@JSSv024i03], which means that inferential hypotheses can be proposed and tested. I use ERGM modeling to assess if the universities and think tanks (who are similar to each other) are more likely to participate in the same cases, that is, are ties more likely between these actors (homophily).
+
+## Results{.tabset}
+
+The following are the main insights from this research:
+
+**1.** *The different centrality measures show that four universities and one legal think tank are the most prominent actors in the amici network.* As expected, universities (especially, their law schools) are among the most central actors in the network around constitutional cases. The *Academia Colombiana de Jurisprudencia* (The Colombian Academy of Jurisprudence) is one of the oldest legal think tanks in the country, focused on the production of legal doctrine.
+
+```{r, layout="l-body-outset",echo=FALSE}
+library(rmarkdown)
+#dataframe for the nodes + degree
+amici.nodesCCC<-data.frame(name=V(amici_CCC)$name, degree=igraph::degree(amici_CCC))
+amici.nodesCCC <- subset(amici.nodesCCC, select = -name)
+#eigenvector centrality
+temp<-centr_eigen(amici_CCC,directed=F)
+amici.nodesCCC$eigen<-temp$vector
+#bonacich power centrality
+amici.nodesCCC$bonpow <- power_centrality(amici_CCC, exponent = 0.9)
+#Betweenness centrality
+amici.nodesCCC$between<-igraph::betweenness(amici_CCC, directed=FALSE)
+#Closeness centrality
+amici.nodesCCC$close <- igraph::closeness(amici_CCC)
+
+#top 5 degree centrality
+paged_table(amici.nodesCCC%>%
+  arrange(desc(degree))%>%
+  slice(1:5))
+```
+
+**2.** *As expected, the co-occurrence network shows that the statistically significant interactions take place among legal-knowledge production actors such as think tanks and universities*
+
+In order to see the significant interactions by type of actor we first need to calculate the co-occurrence statistics, using the *cooccur* package:
+
+```{r,include=FALSE}
+library(haven)
+library(tidyverse)
+library(cooccur)
+
+# data for co-occurrence analysis
+data2 <- read_csv("CCC_Amici.csv")
+data2$count <- 1
+data2 <- data2 %>% select(case, amici_name, amici_type, count)
+coocData <- pivot_wider(data2, id_cols = case, names_from = amici_name, values_from = count, values_fn = list(count = length), values_fill = list(count = 0))
+# create co-occurrence matrix
+myMatrix <- t(as.matrix(select(coocData, -case)))
+# calculate co-occurrence statistics
+coocs <- cooccur(myMatrix, spp_names = TRUE)
+```
+
+```{r,echo=FALSE}
+paged_table(coocs$results)
+```
+
+Then, we use the statistical results to visualize 'significant' edges in the network, taking into account the type of amici actor (a node attribute). We can see the predominance of legal-knowledge production actors in the amici network:
+
+```{r,echo=FALSE}
+# create nodes data
+nodes2 <- read_csv("TypeNode.csv")
+
+# create edges data from cooccur
+edges <- data.frame(from = coocs$results$sp1, to = coocs$results$sp2,
+                    width = log(coocs$results$obs_cooccur))
+
+# create network graph (by type of actor)
+visNetwork(nodes = nodes2, edges = edges) %>% 
+  # darkblue square with shadow for group "A"
+  visGroups(groupname = "THINK", color = "darkorange") %>% 
+  visGroups(groupname = "UNIVERSITY", color = "green") %>%
+  visGroups(groupname = "ADVOCACY", color = "lightblue") %>% 
+  visGroups(groupname = "LABOR", color = "red") %>% 
+  visGroups(groupname = "TRADE", color = "yellow") %>% 
+  visGroups(groupname = "INDIVIDUAL", color = "blue") %>%
+  visLegend(width = 0.1, position = "right", main = "Amici Type") %>%
+  visOptions(highlightNearest = TRUE) %>%
+  visLayout(randomSeed = 123)
+```
+
+**3.** *Finally, ERGM modeling shows that (i) the same types of actors are more likely to participate in the same cases, having a homophily effect here, and (ii) that the overall homophily effect is seen mainly at the legal-knowledge production amici*
+
+This first model uses the basic *nodematch* term to include one network predictor that assess the effect on the likelihood of a dissemination tie when both actor are the same type (e.g. both are think tanks or trade guilds). This is a homophily hypothesis to test if the same types of amici are more likely to participate in the same cases. The positive and significant parameter indicates that ther is a homophily effect here.
+
+```{r, echo=FALSE}
+library(intergraph)
+library(ergm)
+library(jtools)
+library(gtsummary)
+
+# add nodes attribute
+
+CCC_nodes <- read.csv('CCC_nodes.csv')
+
+df <- igraph::as_data_frame(amici_CCC, 'both')
+
+df$vertices <- df$vertices %>% 
+  left_join(CCC_nodes, c('name'='amici_name'))
+
+updated_g <- graph_from_data_frame(df$edges,
+                                   directed = F,
+                                   vertices = df$vertices)
+
+amici_CCC <- updated_g
+
+# Creating the new format network
+CCC_network <- intergraph::asNetwork(amici_CCC)
+
+DSmod1 <- ergm(CCC_network ~ edges +
+                 nodematch('amici_type'),
+               control = control.ergm(seed = 40))
+
+gtsummary::tbl_regression(DSmod1)
+```
+
+The second model tests a hypothesis of differential homophily. This model has 6 different homophily terms. The results suggest that the overall homophily effect, as expected, is seen mainly among universities and think tanks, as well as advocacy organizations.
+
+```{r, echo=FALSE}
+DSmod2 <- ergm(CCC_network ~ edges +
+                 nodematch('amici_type', diff=T),
+               control = control.ergm(seed = 40))
+gtsummary::tbl_regression(DSmod2)
+```
+
+## Discussion{.tabset}
+
+The Colombian legislation that regulates abstract constitutional review states that the court can ask public and private organizations as well as experts to present written briefs about “facts and arguments that are considered to be relevant for the ruling” (art. 13, Decree 2067/1991). This decree further states that whoever presents a brief must disclose if they have any conflict of interest, meaning that the intervener must disclose any relationship with the plaintiff. This regulation speaks to the nature of the interventions: they are not made to support claims (even if they sometimes are used as such), but they are made to advise the court. Granted this regulation only refers to those interveners that have been asked by the Court to intervene, but it signals a broader conception of the briefs. More importantly, the court’s rulings do not distinguish between amicus curiae presented by invited interveners and briefs presented by other amici. Along the same lines, interventions point to having been invited by the court and usually provide arguments to steer the court in a particular direction. Most briefs that agree with the petitioner tend to provide new legal arguments to strengthen the outcome that the petitioner is asking for, but almost always do so without restating or even supporting the petitioner's original line of thought.
+
+In that sense, amici interveners are looking to intervene in a legal debate without necessarily considering how to strategically litigate the case. While most briefs presented in adversarial legal systems are aimed to strengthen the claimants’ argument, interveners in the CCC are seeking to deepen a legal debate and stir the court in a particular direction. Briefs are not always presented to try to win the case or to support the status quo (although some might have that outcome) but are often presented to show legal expertise and to influence jurisprudence. For example, universities that usually present briefs are not politically connected to the cases or have an interest in the claimant’s petition. However, they participate, most of the time through their law schools, to present a viable legal interpretation for the court. This is, of course, often ideologically and politically motivated, but it does not signal an interest in the litigation or the case, but rather an interest in legal interpretation. The stakes of the game are not in the case but on the influence in the legal world, on defining the terms in which law is understood and used, in the legal preferences of the justices.
+
+In this sense, it might not be surprising that universities and think tanks have a more prominent role in the amici network around abstract constitutional review cases.
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+

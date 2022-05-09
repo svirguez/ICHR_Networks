@@ -260,26 +260,137 @@ amici.nodes$eigen<-temp$vector
 
 #Fast and Greedy Community Detection
 
-amici.fg<-cluster_fast_greedy(as.undirected(amici_ad))
-igraph::groups(amici.fg)
+comm.fg<-cluster_fast_greedy(as.undirected(amici_ad))
+igraph::groups(comm.fg)
 
-plot(amici.fg,amici_ad, vertex.label=NA)
+plot(comm.fg,amici_ad, vertex.label=NA)
 
 amici.nodes$comm.fg<-amici.fg$membership
-nodes.by.gp(amici.nodes,"comm.fg")
+
 
 
 #Walktrap
 
-amici.wt<-walktrap.community(amici_ad)
-igraph::groups(alliances.wt)
+comm.wt<-walktrap.community(amici_ad)
+igraph::groups(comm.wt)
 
-plot(amici.wt,amici_ad, vertex.label=NA)
+plot(comm.wt,amici_ad, vertex.label=NA)
+
+amici.nodes$comm.wt<-comm.wt$membership
+
+#leading label
+
+comm.lab<-label.propagation.community(as.undirected(amici_ad))
+igraph::groups(comm.lab)
+
+plot(comm.lab,amici_ad, vertex.label=NA)
+
+amici.nodes$comm.wt<-comm.lab$membership
+
+#compare
+
+mods<-c(fastgreedy=modularity(comm.fg), walktrap=modularity(comm.wt), walktrap=modularity(comm.lab))
+
+compare.algs<-function(alg.a,alg.b,compare.meth=c("vi", "nmi", "split.join", "rand", "adjusted.rand")){
+  #create list of community objects and methods
+  comm.compare<-expand.grid(alg.a=alg.a, alg.b=alg.b, meth=compare.meth, result=NA, stringsAsFactors = FALSE)
+  #compare community partitions using a loop
+  for(i in 1:nrow(comm.compare)){
+    comm1<-get(comm.compare$alg.a[i])
+    comm2<-get(comm.compare$alg.b[i])
+    method<-comm.compare$meth[i]
+    comm.compare$result[i]<-compare(comm1, comm2, method)
+  }
+  return(comm.compare)
+}
+
+compare.algs(alg.a=c("amici.fg"),alg.b="amici.wt")
+
+compare.algs(alg.a=c("comm.fg","comm.wt"),alg.b="comm.lab")
 
 
-print(blockmodel(alliances.stat,alliances.wt$membership)$block.model, digits=2)
-alliances.nodes$comm.wt<-alliances.wt$membership
-nodes.by.gp(alliances.nodes,"comm.wt")
+########################## Amici CCC ##################################
+
+library(igraph)
+library(tidyr)
+data_CCC <- read.csv("CCC_Amici.csv")
+##New column count
+data_CCC$count <- 1
+
+##Gather the data at case level
+lev_data_CCC <- pivot_wider(data_CCC,id_cols = case, names_from = `amici_name`, 
+                        values_from = count, values_fn = list(count = length), 
+                        values_fill = list(count = 0))
+
+##transpose lev_data to have amici grouped by case
+library(data.table)
+T_lev_data_CCC <- transpose(lev_data_CCC,)
+rownames(T_lev_data_CCC) <- colnames(lev_data_CCC)
+colnames(T_lev_data_CCC) <- lev_data_CCC$case
+T_lev_data_CCC <- T_lev_data_CCC[-c(1),]
+
+##create affiliation network graph using 'igraph'
+Aff_network_CCC <- graph.incidence(T_lev_data_CCC)
+
+############
+
+#One-Mode matrix (actor x actor)
+
+##extracting the one-mode projection
+Aff_network_CCC.pr <- bipartite.projection(Aff_network_CCC)
+
+##Actor x actor adjacency matrix
+
+amici_CCC <- Aff_network_CCC.pr$proj1
+
+amici_CCC <- graph.adjacency(get.adjacency(amici_CCC, sparse = FALSE,attr = "weight"))
+
+
+summary(rowSums(select(T_lev_data_CCC,-1)>0, na.rm = TRUE))
+
+
+##Community detection
+comm.fg<-cluster_fast_greedy(as.undirected(amici_CCC))
+plot(comm.fg,amici_CCC, vertex.label=NA)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#Affiliation network data
+library(igraph)
+library(tidyr)
+data <- read.csv("Cleaned_Data.csv")
+##New column count
+data$count <- 1
+
+##Gather the data at case level
+lev_data <- pivot_wider(data,id_cols = CaseID, names_from = `Name`, 
+                        values_from = count, values_fn = list(count = length), 
+                        values_fill = list(count = 0))
+
+##transpose lev_data to have amici grouped by case
+library(data.table)
+T_lev_data <- transpose(lev_data,)
+rownames(T_lev_data) <- colnames(lev_data)
+colnames(T_lev_data) <- lev_data$CaseID
+T_lev_data <- T_lev_data[-c(1),]
 
 
 
